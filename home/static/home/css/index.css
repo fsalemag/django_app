@@ -1,0 +1,13 @@
+body {
+    padding-top: 56px;
+}
+
+div.footer ul li a {
+  color: white;
+  list-style:none;
+}
+
+
+div.footer ul {
+  list-style-type: none;
+}
