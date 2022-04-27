@@ -1,8 +1,9 @@
 .PHONY: up create down
 create:
-	docker-compose run web django-admin startproject django_project .
+	docker-compose run web django-admin startproject website .
 
 up:
-	docker-compose up
+	docker-compose up -d
 
-down: docker-compose down
+down: 
+	docker-compose down
