@@ -1,4 +1,4 @@
-.PHONY: up create down shell
+.PHONY: up create down shell dump load
 shell:
 	docker-compose run web bash -c /bin/bash
 
@@ -10,3 +10,19 @@ up:
 
 down: 
 	docker-compose down
+
+
+DUMP_FILE ?= dump.json
+dump:
+	docker-compose run web python manage.py dumpdata \
+		--natural-foreign --natural-primary \
+		-e contenttypes \
+		-e auth.Permission \
+		-e admin.logentry \
+		-e sessions.session \
+		-e auth.user \
+		--indent 2 > $(DUMP_FILE)
+
+
+load:
+	docker-compose run web python manage.py loaddata $(DUMP_FILE)
