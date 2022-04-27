@@ -1,0 +1,120 @@
+	{% extends "home/base.html" %}
+	{% load static %}
+	{% block title %}Resume{% endblock %}
+	{% block resume-active %}active{% endblock %}
+	
+	{% block custom_sources %}
+	<link type="text/css" rel="stylesheet" href="{% static 'resume/style.css' %}">
+	{% endblock %}
+
+	{% block body %}
+	<div id="cv" class="container" >
+		<div class="mainDetails">
+			<div id="headshot" class="">
+				<img src="{% static 'resume/headshot.jpg' %}" alt="Alan Smith" />
+			</div>
+			
+			<div id="name">
+				<h1 class="">Francisco Salema</h1>
+				<h3 class=" ">Back-end Developer</h3>
+			</div>
+			
+			<div id="contactDetails" class="">
+				<ul>
+					<li><a class="btn btn-outline-secondary" style="float: right; margin:-1em -2.5em 0.2em 0" href="{{ MEDIA_URL }}Resume Francisco Salema.pdf" download>Download</a></li>
+					<li><a href="mailto:francisco.salema.g@gmail.com" target="_blank">francisco.salema.g@gmail.com</a></li>
+					<li><a href="https://fsalemag.pythonanywhere.com">www.fsalemag.com</a></li>
+					<li>+31 621 262 927</li>
+				</ul>
+			</div>
+			<div class="clear"></div>`
+		</div>
+		
+		<div id="mainArea" class="">
+			<section>
+				<article>
+					<div class="sectionTitle">
+						<h1>Personal Profile</h1>
+					</div>
+					
+					<div class="sectionContent">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dolor metus, interdum at scelerisque in, porta at lacus. Maecenas dapibus luctus cursus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies massa et erat luctus hendrerit. Curabitur non consequat enim. Vestibulum bibendum mattis dignissim. Proin id sapien quis libero interdum porttitor.</p>
+					</div>
+				</article>
+				<div class="clear"></div>
+			</section>
+			
+			
+			<section>
+				<div class="sectionTitle">
+					<h1>Work Experience</h1>
+				</div>
+				
+				<div class="sectionContent">
+					<article>
+						<h2>Job Title at Company</h2>
+						<p class="subDetails">April 2011 - Present</p>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies massa et erat luctus hendrerit. Curabitur non consequat enim. Vestibulum bibendum mattis dignissim. Proin id sapien quis libero interdum porttitor.</p>
+					</article>
+					
+					<article>
+						<h2>Job Title at Company</h2>
+						<p class="subDetails">Janruary 2007 - March 2011</p>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies massa et erat luctus hendrerit. Curabitur non consequat enim. Vestibulum bibendum mattis dignissim. Proin id sapien quis libero interdum porttitor.</p>
+					</article>
+					
+					<article>
+						<h2>Job Title at Company</h2>
+						<p class="subDetails">October 2004 - December 2006</p>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies massa et erat luctus hendrerit. Curabitur non consequat enim. Vestibulum bibendum mattis dignissim. Proin id sapien quis libero interdum porttitor.</p>
+					</article>
+				</div>
+				<div class="clear"></div>
+			</section>
+			
+			
+			<section>
+				<div class="sectionTitle">
+					<h1>Key Skills</h1>
+				</div>
+				
+				<div class="sectionContent">
+					<ul class="keySkills">
+						<li>A Key Skill</li>
+						<li>A Key Skill</li>
+						<li>A Key Skill</li>
+						<li>A Key Skill</li>
+						<li>A Key Skill</li>
+						<li>A Key Skill</li>
+						<li>A Key Skill</li>
+						<li>A Key Skill</li>
+					</ul>
+				</div>
+				<div class="clear"></div>
+			</section>
+			
+			
+			<section>
+				<div class="sectionTitle">
+					<h1>Education</h1>
+				</div>
+				
+				<div class="sectionContent">
+					<article>
+						<h2>College/University</h2>
+						<p class="subDetails">Qualification</p>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies massa et erat luctus hendrerit. Curabitur non consequat enim.</p>
+					</article>
+					
+					<article>
+						<h2>College/University</h2>
+						<p class="subDetails">Qualification</p>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies massa et erat luctus hendrerit. Curabitur non consequat enim.</p>
+					</article>
+				</div>
+				<div class="clear"></div>
+			</section>
+			
+		</div>
+	</div>
+	{% endblock %}

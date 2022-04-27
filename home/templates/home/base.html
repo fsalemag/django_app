@@ -40,6 +40,15 @@
           <li class="nav-item {% block home-active %}{% endblock %}">
 			      <a class="nav-link" href="{% url 'home-index' %}">Home</a>
           </li>
+          <li class="nav-item {% block resume-active %}{% endblock %}">
+            <a class="nav-link" href="{% url 'resume-index' %}">Resume</a>
+          </li>
+          <li class="nav-item {% block trips-active %}{% endblock %}">
+			  <a class="nav-link" href="{% url 'album-index' %}">Trips</a>
+          </li>
+          <li class="nav-item {% block projects-active %}{% endblock %}">
+            <a class="nav-link" href="{% url 'projects-index' %}">Projects</a>
+          </li>
         </ul>
       </div>
     </div>
