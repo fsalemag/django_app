@@ -1,26 +1,30 @@
-FROM python:3.9-alpine3.13
+FROM python:3.9-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /code
+ARG USER_ID
+ARG GROUP_ID
+ARG USER_NAME
+ARG GROUP_NAME
+
+RUN groupadd --gid $GROUP_ID $GROUP_NAME; \
+    useradd --create-home --no-log-init --uid $USER_ID --gid $GROUP_ID $USER_NAME
+
 EXPOSE 8000
 
-COPY requirements.txt /code/
-RUN pip install --upgrade pip && \
-    apk add --update --no-cache postgresql-client && \
-    apk add --update --no-cache --virtual .tmp-deps \
-        build-base \
-        postgresql-dev \
-        musl-dev && \
+WORKDIR /code
+COPY . .
+
+RUN set -eux && \
+    apt-get update && \
+    apt-get -y install curl && \
+    pip install --upgrade pip && \
     pip install -r requirements.txt && \
-    apk del .tmp-deps && \
-    adduser --disabled-password --no-create-home app && \
     mkdir -p /vol/web/static && \
     mkdir -p /vol/web/media && \
-    chown -R app:app /vol && \
+    chown -R $USER_NAME:$GROUP_NAME /vol && \
+    chown -R $USER_NAME:$GROUP_NAME /vol/web && \
     chmod -R 755 /vol
 
-COPY . /code/
-
-USER app
+USER $USER_NAME
