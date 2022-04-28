@@ -11,7 +11,7 @@ build:
 		--build-arg GROUP_NAME=app
 
 up:
-	docker-compose up -d
+	docker-compose up
 
 down: 
 	docker-compose down
