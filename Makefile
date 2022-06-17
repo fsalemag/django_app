@@ -1,7 +1,7 @@
 # DOCKER
 .PHONY: up down shell dump load build
 shell:
-	docker-compose run web sh -c /bin/sh
+	docker-compose run web sh -c /bin/bash
 
 build:
 	docker-compose build \
