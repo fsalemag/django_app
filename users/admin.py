@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import MyUser
+from .models import MyUser, UserProfile
 
 
 class MyUserAdmin(UserAdmin):
@@ -20,3 +20,6 @@ class MyUserAdmin(UserAdmin):
     )
     search_fields = ('email',)
     ordering = ('email',)
+
+
+admin.site.register(UserProfile)

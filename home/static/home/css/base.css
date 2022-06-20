@@ -1,5 +1,6 @@
 body {
     padding-top: 56px;
+    min-height: 100%;
 }
 
 div.footer ul li a {
