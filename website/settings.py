@@ -4,17 +4,14 @@ import sys
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = bool(int(os.environ.get("DEBUG", 0)))
 
-ALLOWED_HOSTS = list(
-    filter(
+ALLOWED_HOSTS = list(filter(
         None,
         os.environ.get('ALLOWED_HOSTS', '').split(','),
-    )
-)
+))
 
 AUTH_USER_MODEL = 'users.MyUser'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
@@ -26,16 +23,7 @@ ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 3
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 60
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
-ACCOUNT_FORMS = {
-    # 'login': 'allauth.account.forms.LoginForm',
-    'signup': 'users.forms.CustomSignupForm',
-    # 'add_email': 'allauth.account.forms.AddEmailForm',
-    # 'change_password': 'allauth.account.forms.ChangePasswordForm',
-    # 'set_password': 'allauth.account.forms.SetPasswordForm',
-    # 'reset_password': 'allauth.account.forms.ResetPasswordForm',
-    # 'reset_password_from_key': 'allauth.account.forms.ResetPasswordKeyForm',
-    # 'disconnect': 'allauth.socialaccount.forms.DisconnectForm',
-}
+ACCOUNT_FORMS = {'signup': 'users.forms.CustomSignupForm'}
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -95,8 +83,6 @@ TEMPLATES = [
     },
 ]
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
 WSGI_APPLICATION = 'website.wsgi.application'
 
 DATABASES = {
@@ -115,18 +101,10 @@ if 'test' in sys.argv:
     DATABASES['default']['NAME'] = ':memory:'
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 LANGUAGE_CODE = 'en-us'
@@ -144,8 +122,8 @@ STATIC_ROOT = '/vol/web/static'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # EMAIL
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' if DEBUG \
+    else 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp-mail.outlook.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
