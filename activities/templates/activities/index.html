@@ -1,0 +1,19 @@
+{% extends "activities/base.html" %}
+
+{% block body %}
+
+<main role="main">
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row">
+
+{% for activity in object_list %}
+    <a href="{% url 'activities-category' activity.name %} "><p>{{ activity.name }} - {{ activity.description }}</p></a>
+{% endfor %}
+
+		</div>
+    </div>
+  </div>
+
+</main>
+{% endblock %}
