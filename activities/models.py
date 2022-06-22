@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import MyUser
-
+from django.urls import reverse
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -25,15 +25,18 @@ class Activity(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     location = models.CharField(max_length=100)
-    time_of_event = models.DateField()
-    created_on = models.DateField()
-    updated_on = models.DateField()
+    time_of_event = models.DateTimeField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
 
     min_n_participants = models.IntegerField()
     max_n_participants = models.IntegerField()
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('activities-detail', kwargs={'pk': self.pk, 'category': self.category.name})
 
 
 class FavouriteActivity(models.Model):

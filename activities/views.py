@@ -25,4 +25,16 @@ class ActivityDetailView(DetailView):
 
 
 class ActivityEditDetailView(UpdateView):
+    model = Activity
     template_name = "activities/edit-activity-detail.html"
+    fields = [
+        'title', 'description', 'location', 'time_of_event'
+    ]
+
+    def get(self, request, *args, **kwargs):
+        print(dir(self.get_object()))
+        # if self.get_object().get(email=user == request.user.email:
+        #     return super().get(request, *args, **kwargs)
+        # else:
+        #     print("welele")
+        return super().get(request, *args, **kwargs)
