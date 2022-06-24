@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic import DetailView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, CreateView
 from django.urls import reverse_lazy, reverse
 
 from .models import Activity, Category
@@ -19,12 +19,20 @@ class ActivityView(ListView):
     # ordering = ['-date_posted']
 
 
-
-
 class ActivityDetailView(DetailView):
     model = Activity
     template_name = "activities/activity-detail.html"
 
+    # ordering = ['-date_posted']
+
+
+class ActivityCreateView(CreateView):
+    model = Activity
+    template_name = "activities/create-activity.html"
+
+    fields = [
+        'title', 'description', 'location', 'time_of_event'
+    ]
     # ordering = ['-date_posted']
 
 
