@@ -29,7 +29,7 @@ class Activity(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
-    min_n_participants = models.IntegerField()
+    participants = models.ManyToManyField(MyUser, related_name="participants")
     max_n_participants = models.IntegerField()
 
     def __str__(self):

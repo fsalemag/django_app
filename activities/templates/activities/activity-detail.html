@@ -5,19 +5,41 @@
     <main role="main">
         <div class="album py-5 bg-light">
             <div class="container">
-                <div class="row">
-                    {{ object.category }} - @{{ object.creator.email }}@ - @{{ user.email }}@ - {{ object.title }}
-                    - {{ object.description }} -
-                    {{ object.created_on }} -
-                    {{ object.location }} -
-                    {{ object.min_n_participants }}/{{ object.max_n_participants }} -
-                    {{ object.time_of_event }} - {{ object.id }} -
-                    {% if object.creator.email == user.email %}
-                        <a href="{% url 'activities-edit-detail' object.category object.id %}">Edit</a>
+                <h1>
+                    {% if object.participants.count >= object.max_n_participants %}
+                        Activity is full !!!
+                        {% if user in object.participants.all %}
+                            But you got your spot!!
+                        {% endif %}
                     {% endif %}
 
+                </h1>
+                <h1>{{ object.category }} - {{ object.creator.email }} - {{ object.title }}</h1>
+                <h2>{{ object.description }}</h2><br><br>
 
-                </div>
+                <p>{{ object.time_of_event }} - {{ object.location }}</p>
+                <p>{{ object.participants.count }}/{{ object.max_n_participants }}</p>
+
+                <p>{% if object.creator.email == user.email %}
+                    <a href="{% url 'activities-edit-detail' object.category object.id %}">Edit</a>
+                {% endif %}</p>
+                {% if object.participants.count < object.max_n_participants and user not in object.participants.all %}
+                    <form class="pointer" method="post"
+                          action="{% url 'activities-edit-detail' object.category object.id %}">
+                        {% csrf_token %}
+                        <a class="dropdown-item" onclick="this.parentNode.submit()">Join</a>
+                        <input type="hidden" name="action" value="join">
+                    </form>
+                {% elif user in object.participants.all %}
+                    <form class="pointer" method="post"
+                          action="{% url 'activities-edit-detail' object.category object.id %}">
+                        {% csrf_token %}
+                        <a class="dropdown-item" onclick="this.parentNode.submit()">Un-join</a>
+                        <input type="hidden" name="action" value="unjoin">
+                    </form>
+                {% endif %}
+
+
             </div>
         </div>
 

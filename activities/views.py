@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView
+from django.urls import reverse_lazy, reverse
 
 from .models import Activity, Category
 
@@ -18,9 +19,12 @@ class ActivityView(ListView):
     # ordering = ['-date_posted']
 
 
+
+
 class ActivityDetailView(DetailView):
     model = Activity
     template_name = "activities/activity-detail.html"
+
     # ordering = ['-date_posted']
 
 
@@ -32,9 +36,27 @@ class ActivityEditDetailView(UpdateView):
     ]
 
     def get(self, request, *args, **kwargs):
-        print(dir(self.get_object()))
-        # if self.get_object().get(email=user == request.user.email:
-        #     return super().get(request, *args, **kwargs)
-        # else:
-        #     print("welele")
-        return super().get(request, *args, **kwargs)
+        if request.user.is_authenticated:
+            if self.get_object().creator.email == request.user.email:
+                return super().get(request, *args, **kwargs)
+            else:
+                return redirect("home-index")
+        else:
+            return redirect("account_login")
+
+    def post(self, request, *args, **kwargs):
+        activity = Activity.objects.get(pk=kwargs["pk"])
+
+        # Remove logged in user from the current activity
+        if request.POST.get("action", "") == "unjoin":
+            activity.participants.remove(request.user)
+            return redirect(reverse("activities-detail", kwargs=kwargs), permanent=True)
+
+        # Add logged in user to the current activity
+        elif request.POST.get("action", "") == "join":
+            activity.participants.add(request.user)
+            return redirect(reverse("activities-detail", kwargs=kwargs), permanent=True)
+
+        # Normal form to update activity with self.fields
+        else:
+            return super().post(request, *args, **kwargs)
