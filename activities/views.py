@@ -4,13 +4,22 @@ from django.views.generic.list import ListView
 from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView, CreateView
 from django.urls import reverse_lazy, reverse
-
+from django.db.models import Count
 from .models import Activity, Category
 
 
 class CategoryView(ListView):
     model = Category
     template_name = "activities/index.html"
+
+    # categories = Category.objects.annotate(number_of_activities=Count('activity'))
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.annotate(n_activities=Count('activity'))
+
+        return qs
+
     # ordering = ['-date_posted']
 
 

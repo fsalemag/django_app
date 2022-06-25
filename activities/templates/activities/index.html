@@ -1,20 +1,40 @@
 {% extends "activities/base.html" %}
 {% block activities-active %}active{% endblock %}
+{% block title %}Activities{% endblock %}
+{% load static %}
+
+{#{% block custom_sources %}#}
+{#    <link rel="stylesheet" href="{% static "album/css/index.css" %}">#}
+{#    <link rel="stylesheet" href="{% static "album/js/index.js" %}">#}
+{#{% endblock %}#}
 
 {% block body %}
 
-<main role="main">
-  <div class="album py-5 bg-light">
-    <div class="container">
-      <div class="row">
+    <main role="main">
+        <div class="py-5 bg-light">
+            <div class="container">
+                <div class="row">
 
-{% for activity in object_list %}
-    <a href="{% url 'activities-category' activity.name %} "><p>{{ activity.name }} - {{ activity.description }}</p></a>
-{% endfor %}
+                    {% for category in object_list %}
+                        <div class="col-sm-12 col-md-3 ">
+                            <div class="card mb-4 shadow-sm">
+                                <div style="height: 15em; overflow:hidden; text-align:center;">
+                                    <img style="text-align:center; width: 100%;" src="{% static "activities/media/football.jpg" %}" alt="home" />
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">{{ category.name }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <a href="{% url 'activities-category' category.name %} "><p>See activities</p></a>
+                                        <small class="text-muted">{{ category.n_activities }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
 
-		</div>
-    </div>
-  </div>
+                </div>
+            </div>
+        </div>
 
-</main>
+    </main>
 {% endblock %}

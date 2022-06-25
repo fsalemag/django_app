@@ -32,6 +32,7 @@ dump:
 		-e auth.Permission \
 		-e admin.logentry \
 		-e sessions.session \
+		-e users \
 		-e auth.user \
 		--indent 2 > $(DUMP_FILE)
 
