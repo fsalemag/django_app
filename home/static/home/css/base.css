@@ -1,25 +1,41 @@
 body {
     padding-top: 56px;
+    min-height: 100vh;
+    position: relative;
+    margin: 0;
+    box-sizing: border-box;
+    padding-bottom: 100px;
 }
 
 div.footer ul li a {
-  color: white;
-  list-style:none;
+    color: white;
+    list-style: none;
 }
 
 
 div.footer ul {
-  list-style-type: none;
+    list-style-type: none;
 }
 
-#drop-down:after{
-    display:none;
+#drop-down:after {
+    display: none;
 }
 
 
-.pointer{
+.pointer {
     cursor: pointer;
 }
 
-html {padding:0; margin:0; height:100%;}
-footer{position: absolute; bottom: 0; left: 0; right: 0;}
+html {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height:100px;
+}
