@@ -23,3 +23,4 @@ class MyUserAdmin(UserAdmin):
 
 
 admin.site.register(UserProfile)
+admin.site.register(MyUser)
