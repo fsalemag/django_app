@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic import DetailView
@@ -11,6 +12,16 @@ class CategoryView(ListView):
     model = Category
     template_name = "activities/index.html"
     # ordering = ['-date_posted']
+
+
+class ActivityMineView(ListView):
+    model = Activity
+    template_name = "activities/activity-mine.html"
+    # ordering = ['-date_posted']
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset()
+        return queryset.filter(creator=self.request.user)
 
 
 class ActivityView(ListView):
@@ -31,8 +42,16 @@ class ActivityCreateView(CreateView):
     template_name = "activities/create-activity.html"
 
     fields = [
-        'title', 'description', 'location', 'time_of_event'
+        'title', 'description', 'location', 'time_of_event', 'max_n_participants', 'category'
     ]
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.creator = self.request.user
+        obj.save()
+
+        return redirect(reverse('activities-mine'))
+
     # ordering = ['-date_posted']
 
 

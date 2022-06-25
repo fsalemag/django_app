@@ -1,0 +1,24 @@
+{% extends "activities/base.html" %}
+{% block body %}
+
+    <main role="main">
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row">
+
+                    {% for activity in object_list %}
+                        <a href="{% url 'activities-detail' activity.category activity.id %}"><p>{{ activity.category }} - {{ activity.creator }} - {{ activity.title }}
+                            - {{ activity.description }} -
+                            {{ activity.created_on }} -
+                            {{ activity.location }} -
+                            {{ activity.participants.count }}/{{ activity.max_n_participants }} -
+                            {{ activity.time_of_event }} -  {{ activity.id }}
+                        </p></a>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+{% endblock %}
