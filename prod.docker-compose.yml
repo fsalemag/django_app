@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    env_file:
+      - .env
+    networks:
+      - test
+  web:
+    build:
+      context: .
+      dockerfile: ./prod.Dockerfile
+    image: django_app:latest-dev
+    volumes:
+      - .:/code
+      - ./data/web:/vol/web
+    env_file:
+      - prod.env
+
+    depends_on:
+      - db
+    networks:
+      - test
+
+networks:
+   test:
+      external: true
