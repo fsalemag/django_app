@@ -5,8 +5,11 @@ DOCKER_BUILD_ARGS += --build-arg USER_NAME=app
 DOCKER_BUILD_ARGS += --build-arg GROUP_NAME=app
 
 .PHONY: up down shell dump load build build-dev build-prod
-shell:
-	docker-compose run web sh -c /bin/bash
+shell-dev: shell_dev
+shell-prod: shell_prod
+shell-stag: shell_staging
+shell_%:
+	docker run --rm -it --entrypoint "/bin/bash" django_app:latest-$*
 
 build-dev: build_dev
 build-prod: build_prod
