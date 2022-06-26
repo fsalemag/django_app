@@ -21,7 +21,7 @@ services:
       - prod.env
 
     depends_on:
-      - db
+      - db-staging
     networks:
       - test
 
