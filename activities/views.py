@@ -12,20 +12,19 @@ class CategoryView(ListView):
     model = Category
     template_name = "activities/index.html"
 
-    # categories = Category.objects.annotate(number_of_activities=Count('activity'))
-
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.annotate(n_activities=Count('activity'))
+        qs = qs.annotate(n_activities=Count('activity')).order_by(
+            "-n_activities"
+        )
 
         return qs
-
-    # ordering = ['-date_posted']
 
 
 class ActivityMineView(ListView):
     model = Activity
     template_name = "activities/activity-mine.html"
+
     # ordering = ['-date_posted']
 
     def get_queryset(self, *args, **kwargs):
