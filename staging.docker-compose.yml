@@ -13,7 +13,7 @@ services:
     build:
       context: .
       dockerfile: ./prod.Dockerfile
-    image: django_app:latest-prod
+    image: django_app:latest-dev
     volumes:
       - .:/code
       - ./data/web:/vol/web

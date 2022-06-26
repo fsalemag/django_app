@@ -10,17 +10,20 @@ shell:
 
 build-dev: build_dev
 build-prod: build_prod
+build-stag: build_staging
 build_%:
 		docker-compose -f $*.docker-compose.yml \
-			build $(DOCKER_BUILD_ARGS) \
+			build $(DOCKER_BUILD_ARGS)
 
 up-dev: up_dev
 up-prod: up_prod
+up-stag: up_staging
 up_%:
 	docker-compose -f $*.docker-compose.yml up
 
 down-dev: down_dev
 down-prod: down_prod
+down-stag: down_staging
 down_%:
 	docker-compose -f $*.docker-compose.yml down
 
@@ -35,6 +38,7 @@ create:
 DUMP_FILE ?= dump.json
 dump-dev: dump_dev
 dump-prod: dump_prod
+dump-stag: dump_staging
 dump_%:
 	docker-compose -f $*.docker-compose.yml run web python manage.py dumpdata \
 		--natural-foreign --natural-primary \
@@ -49,5 +53,6 @@ dump_%:
 
 load-dev: load_dev
 load-prod: load_prod
+load-stag: load_staging
 load_%:
 	docker-compose -f $*.docker-compose.yml run web python manage.py loaddata $(DUMP_FILE)
