@@ -8,7 +8,7 @@ DOCKER_BUILD_ARGS += --build-arg GROUP_NAME=app
 shell-dev: shell_dev
 shell-prod: shell_prod
 shell-stag: shell_staging
-shell:
+shell_%:
 	docker run --rm -it --entrypoint "/bin/bash" django_app:latest-$*
 
 build-dev: build_dev
