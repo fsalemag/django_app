@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  db:
+  db-staging:
     image: postgres
     volumes:
       - ./data/db:/var/lib/postgresql/data
@@ -9,7 +9,7 @@ services:
       - prod.env
     networks:
       - test
-  web:
+  web-staging:
     build:
       context: .
       dockerfile: ./prod.Dockerfile
