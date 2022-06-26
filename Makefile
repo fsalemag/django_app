@@ -9,7 +9,7 @@ shell-dev: shell_dev
 shell-prod: shell_prod
 shell-stag: shell_staging
 shell_%:
-	docker run --rm -it --entrypoint "/bin/bash" django_app:latest-$*
+	docker run --rm -it --entrypoint "/bin/bash" django_app:latest-$* --env-file $(subst staging,prod,$*).env
 
 build-dev: build_dev
 build-prod: build_prod
