@@ -82,7 +82,7 @@ class ActivityEditDetailView(UpdateView):
     def post(self, request, *args, **kwargs):
         activity = Activity.objects.get(pk=kwargs["pk"])
 
-        # Remove logged in user from the current activity
+        # Remove logged user from the current activity
         if request.POST.get("action", "") == "unjoin":
             activity.participants.remove(request.user)
             return redirect(reverse("activities-detail", kwargs=kwargs), permanent=True)

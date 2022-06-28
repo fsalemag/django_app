@@ -1,2 +1,246 @@
 [
+{
+  "model": "activities.category",
+  "pk": 1,
+  "fields": {
+    "name": "Football",
+    "description": "Lets chill and play"
+  }
+},
+{
+  "model": "activities.category",
+  "pk": 2,
+  "fields": {
+    "name": "Volleyball",
+    "description": "Lets chill and play"
+  }
+},
+{
+  "model": "activities.category",
+  "pk": 3,
+  "fields": {
+    "name": "Basketball",
+    "description": "Lets chill and play"
+  }
+},
+{
+  "model": "activities.category",
+  "pk": 4,
+  "fields": {
+    "name": "Yoga",
+    "description": "Lets chill and play"
+  }
+},
+{
+  "model": "activities.category",
+  "pk": 5,
+  "fields": {
+    "name": "Rugby",
+    "description": "Lets chill and play"
+  }
+},
+{
+  "model": "activities.category",
+  "pk": 6,
+  "fields": {
+    "name": "Tennis",
+    "description": "Lets chill and play"
+  }
+},
+{
+  "model": "activities.category",
+  "pk": 7,
+  "fields": {
+    "name": "Padel",
+    "description": "Lets chill and play"
+  }
+},
+{
+  "model": "activities.category",
+  "pk": 8,
+  "fields": {
+    "name": "Jogging",
+    "description": "Lets chill and play"
+  }
+},
+{
+  "model": "activities.category",
+  "pk": 9,
+  "fields": {
+    "name": "Hockey",
+    "description": "Lets chill and play"
+  }
+},
+{
+  "model": "activities.category",
+  "pk": 10,
+  "fields": {
+    "name": "Cycling",
+    "description": "Lets chill and play"
+  }
+},
+{
+  "model": "activities.category",
+  "pk": 11,
+  "fields": {
+    "name": "Box",
+    "description": "Lets chill and play"
+  }
+},
+{
+  "model": "activities.category",
+  "pk": 12,
+  "fields": {
+    "name": "Handball",
+    "description": "Lets chill and play"
+  }
+},
+{
+  "model": "activities.activity",
+  "pk": 2,
+  "fields": {
+    "category": 1,
+    "creator": [
+      "x_salema@hotmail.com"
+    ],
+    "title": "another title",
+    "description": "desc",
+    "location": "location",
+    "time_of_event": "2022-06-21T00:00:00Z",
+    "created_on": "2022-06-21T00:00:00Z",
+    "updated_on": "2022-06-22T18:36:55.995Z",
+    "max_n_participants": 9,
+    "participants": [
+      [
+        "x_salema@hotmail.com"
+      ]
+    ]
+  }
+},
+{
+  "model": "activities.activity",
+  "pk": 3,
+  "fields": {
+    "category": 1,
+    "creator": [
+      "x_salema@hotmail.com"
+    ],
+    "title": "Just another activity",
+    "description": "Join me!",
+    "location": "Madrid",
+    "time_of_event": "2022-06-22T00:00:01Z",
+    "created_on": "2022-06-22T00:00:00Z",
+    "updated_on": "2022-06-22T19:55:48.928Z",
+    "max_n_participants": 4,
+    "participants": []
+  }
+},
+{
+  "model": "activities.activity",
+  "pk": 16,
+  "fields": {
+    "category": 1,
+    "creator": [
+      "x_salema@hotmail.com"
+    ],
+    "title": "asdf",
+    "description": "asdf",
+    "location": "asdf",
+    "time_of_event": "2022-06-21T00:00:00Z",
+    "created_on": "2022-06-25T08:40:31.192Z",
+    "updated_on": "2022-06-25T08:40:31.192Z",
+    "max_n_participants": 3,
+    "participants": []
+  }
+},
+{
+  "model": "activities.activity",
+  "pk": 17,
+  "fields": {
+    "category": 1,
+    "creator": [
+      "x_salema@hotmail.com"
+    ],
+    "title": "asdf",
+    "description": "asdf",
+    "location": "asdf",
+    "time_of_event": "2022-06-21T00:00:00Z",
+    "created_on": "2022-06-25T08:41:22.967Z",
+    "updated_on": "2022-06-25T08:41:22.967Z",
+    "max_n_participants": 3,
+    "participants": []
+  }
+},
+{
+  "model": "activities.activity",
+  "pk": 18,
+  "fields": {
+    "category": 1,
+    "creator": [
+      "x_salema@hotmail.com"
+    ],
+    "title": "qwert",
+    "description": "qwert",
+    "location": "Madrid",
+    "time_of_event": "2022-06-21T00:00:00Z",
+    "created_on": "2022-06-25T09:42:56.274Z",
+    "updated_on": "2022-06-25T09:42:56.274Z",
+    "max_n_participants": 3,
+    "participants": []
+  }
+},
+{
+  "model": "activities.activity",
+  "pk": 19,
+  "fields": {
+    "category": 1,
+    "creator": [
+      "x_salema@hotmail.com"
+    ],
+    "title": "qwert",
+    "description": "qwert",
+    "location": "Madrid",
+    "time_of_event": "2022-06-21T00:00:00Z",
+    "created_on": "2022-06-25T09:45:56.020Z",
+    "updated_on": "2022-06-25T09:45:56.020Z",
+    "max_n_participants": 3,
+    "participants": []
+  }
+},
+{
+  "model": "activities.activity",
+  "pk": 20,
+  "fields": {
+    "category": 1,
+    "creator": [
+      "x_salema@hotmail.com"
+    ],
+    "title": "qwer",
+    "description": "qwer",
+    "location": "Madrid",
+    "time_of_event": "2022-06-21T00:00:00Z",
+    "created_on": "2022-06-25T09:48:41.631Z",
+    "updated_on": "2022-06-25T09:48:41.631Z",
+    "max_n_participants": 3,
+    "participants": []
+  }
+},
+{
+  "model": "activities.activity",
+  "pk": 21,
+  "fields": {
+    "category": 7,
+    "creator": [
+      "x_salema@hotmail.com"
+    ],
+    "title": "test",
+    "description": "test",
+    "location": "test",
+    "time_of_event": "2022-06-21T00:00:00Z",
+    "created_on": "2022-06-25T11:58:37.712Z",
+    "updated_on": "2022-06-25T11:58:37.712Z",
+    "max_n_participants": 5,
+    "participants": []
+  }
+}
 ]

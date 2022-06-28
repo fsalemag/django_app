@@ -11,11 +11,12 @@
                         <a href="{% url 'activities-detail' activity.category activity.id %}"
                            class="list-group-item list-group-item-action">
                             <div class="d-flex w-100 justify-content-between align-middle align-items-center">
-                                <h5 class="mb-1">List group item heading</h5>
-                                <span class="badge badge-primary badge-pill align-middle">{{ activity }}</span>
+                                <h5 class="mb-1">{{ activity.title }}</h5>
+                                <span class="badge badge-primary badge-pill align-middle">{{ activity.participants.count }}/{{ activity.max_n_participants }}</span>
                             </div>
-                            <p class="mb-1">Some placeholder content in a paragraph.</p>
-                            <small>And some small print.</small>
+                            <p class="mb-1">{{ activity.description }}</p>
+                            <p class="my-0 py-0"><small>{{ activity.time_of_event }}</small></p>
+                            <p class="my-0 py-0"><small>{{ activity.location }}</small></p>
                         </a>
                     {% endfor %}
                 </div>
