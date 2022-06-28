@@ -92,6 +92,15 @@ class ActivityEditDetailView(UpdateView):
             activity.participants.add(request.user)
             return redirect(reverse("activities-detail", kwargs=kwargs), permanent=True)
 
+        if request.POST.get("action", "") == "unjoin-waiting-list":
+            activity.waiting_list.remove(request.user)
+            return redirect(reverse("activities-detail", kwargs=kwargs), permanent=True)
+
+        # Add logged in user to the current activity
+        elif request.POST.get("action", "") == "join-waiting-list":
+            activity.waiting_list.add(request.user)
+            return redirect(reverse("activities-detail", kwargs=kwargs), permanent=True)
+
         # Normal form to update activity with self.fields
         else:
             return super().post(request, *args, **kwargs)

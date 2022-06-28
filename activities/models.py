@@ -32,6 +32,9 @@ class Activity(models.Model):
     participants = models.ManyToManyField(MyUser, related_name="participants")
     max_n_participants = models.IntegerField()
 
+    waiting_list_enabled = models.BooleanField(default=False)
+    waiting_list = models.ManyToManyField(MyUser, related_name="waiting_list", blank=True)
+
     def __str__(self):
         return self.title
 

@@ -5,7 +5,9 @@ DOCKER_BUILD_ARGS += --build-arg USER_NAME=app
 DOCKER_BUILD_ARGS += --build-arg GROUP_NAME=app
 
 .PHONY: up down shell dump load build build-dev build-prod
-shell-dev: shell_dev
+shell-dev:
+	docker-compose -f dev.docker-compose.yml run web sh -c /bin/bash
+
 shell-prod: shell_prod
 shell-stag: shell_staging
 shell_%:

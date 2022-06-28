@@ -2,7 +2,6 @@
 {% block activities-active %}active{% endblock %}
 
 {% block body %}
-
     <main role="main">
         <div class="album py-5 bg-light">
             <div class="container">
@@ -19,28 +18,49 @@
                 <h2>{{ object.description }}</h2><br><br>
 
                 <p>{{ object.time_of_event }} - {{ object.location }}</p>
-                <p>{{ object.participants.count }}/{{ object.max_n_participants }}</p>
+                <p>{{ object.participants.count }}/{{ object.max_n_participants }}
+                    {% if object.participants.count == object.max_n_participants and object.waiting_list_enabled%}
+                        ({{ object.waiting_list.count }})
+                    {% endif %}
+                </p>
 
                 <p>{% if object.creator.email == user.email %}
                     <a href="{% url 'activities-edit-detail' object.category object.id %}">Edit</a>
                 {% endif %}</p>
 
-                {% if user in object.participants.all%}
+                {# Handle action user can take#}
+                {% if user in object.participants.all %}
                     <form class="pointer" method="post"
                           action="{% url 'activities-edit-detail' object.category object.id %}">
                         {% csrf_token %}
                         <button onclick="this.parentNode.submit()">Un-join</button>
                         <input type="hidden" name="action" value="unjoin">
-                    </form>1
-                {% elif object.participants.count < object.max_n_participants and user.is_authenticated%}
+                    </form>
+                {% elif object.participants.count < object.max_n_participants and user.is_authenticated %}
                     <form class="pointer" method="post"
                           action="{% url 'activities-edit-detail' object.category object.id %}">
                         {% csrf_token %}
                         <button onclick="this.parentNode.submit()">Join</button>
                         <input type="hidden" name="action" value="join">
-                    </form>2
+                    </form>
                 {% elif not user.is_authenticated %}
-                    <a class="nav-link" href="{% url 'account_login' %}">Join</a>3
+                    <a class="nav-link" href="{% url 'account_login' %}">Join</a>
+
+                {% elif activity.waiting_list_enabled and user not in object.waiting_list.all %}
+                    <form class="pointer" method="post"
+                          action="{% url 'activities-edit-detail' object.category object.id %}">
+                        {% csrf_token %}
+                        <button onclick="this.parentNode.submit()">Join waiting list</button>
+                        <input type="hidden" name="action" value="join-waiting-list">
+                    </form>
+
+                {% elif activity.waiting_list_enabled and user in object.waiting_list.all %}
+                    <form class="pointer" method="post"
+                          action="{% url 'activities-edit-detail' object.category object.id %}">
+                        {% csrf_token %}
+                        <button onclick="this.parentNode.submit()">Un-join waiting list</button>
+                        <input type="hidden" name="action" value="unjoin-waiting-list">
+                    </form>
                 {% endif %}
 
 
