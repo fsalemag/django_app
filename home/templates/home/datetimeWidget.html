@@ -1,0 +1,28 @@
+<div style="width: 250px;">
+    <div id="picker"></div>
+    <input id="result" type="hidden" name="{{ widget.name }}"
+            {% if widget.value != None %}
+           value="{{ widget.value|stringformat:'s' }}"
+            {% endif %}
+    {% for name, value in widget.attrs.items %}
+        {% if value is not False %}
+            {{ name }}
+            {% if value is not True %}
+                ="{{ value|stringformat:'s' }}"
+            {% endif %}
+        {% endif %}
+    {% endfor %}>
+</div>
+<script>
+    $('#picker').dateTimePicker({
+        {#selectData: "{{ widget.value|stringformat:'s' }}",#}
+        selectData: "{{ widget.value|stringformat:'s' }}",
+        dateFormat: "YYYY-MM-DD HH:mm",
+        showTime: true,
+        locale: 'en',
+        positionShift: {top: 20, left: 0},
+        title: "Select Date and Time",
+        buttonTitle: "Select"
+    });
+
+</script>

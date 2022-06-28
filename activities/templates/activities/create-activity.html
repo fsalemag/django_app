@@ -1,8 +1,33 @@
 {% extends "activities/base.html" %}
 {% block profile-active %}active{% endblock %}
+{% load static %}
+
+{% block custom_sources %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'activities/css/datetimepicker.css' %}">
+    <script src="{% static 'activities/js/datetimepicker.js' %}"></script>
+{% endblock %}
 
 {% block body %}
+    <div class="jquery-script-clear"></div>
 
+    <div style="width: 250px; margin: 50px auto;">
+        <div id="picker"></div>
+        <input type="hidden" id="result" value=""/>
+    </div>
+    <script>
+        $('#picker').dateTimePicker({
+            {#selectData: "now",#}
+            dateFormat: "YYYY-MM-DD HH:mm",
+            showTime: true,
+            locale: 'en',
+            positionShift: { top: 20, left: 0},
+            title: "Select Date and Time",
+            buttonTitle: "Select"
+        });
+
+    </script>
     <main role="main">
         <div class="album py-5 bg-light">
             <div class="container">

@@ -6,7 +6,7 @@ from django.views.generic.edit import UpdateView, CreateView
 from django.urls import reverse_lazy, reverse
 from django.db.models import Count
 from .models import Activity, Category
-
+from .forms import ActivityForm
 
 class CategoryView(ListView):
     model = Category
@@ -66,9 +66,11 @@ class ActivityCreateView(CreateView):
 class ActivityEditDetailView(UpdateView):
     model = Activity
     template_name = "activities/edit-activity-detail.html"
-    fields = [
-        'title', 'description', 'location', 'time_of_event'
-    ]
+    # fields = [
+    #     'title', 'description', 'location', 'time_of_event'
+    # ]
+
+    form_class = ActivityForm
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
