@@ -7,7 +7,7 @@ Features ideas:
 3. Add **comments** to activities
 4. Add maps API to help fill the event location - https://locationiq.com/
 5. Add filtering activities/categories
-6. Add ordering for activities/categories
+6. Add ordering for activbities/categories
 7. Add statistics to home page
 
 # Issues
