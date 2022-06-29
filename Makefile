@@ -25,7 +25,7 @@ build_%:
 			build $(DOCKER_BUILD_ARGS)
 
 up-dev:
-	docker-compose -f $*.docker-compose.yml up
+	docker-compose -f dev.docker-compose.yml up
 up-prod: up_prod
 up-stag: up_staging
 up_%:
