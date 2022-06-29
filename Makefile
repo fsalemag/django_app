@@ -24,17 +24,23 @@ build_%:
 		docker-compose -f $*.docker-compose.yml \
 			build $(DOCKER_BUILD_ARGS)
 
-up-dev: up_dev
+up-dev:
+	docker-compose -f $*.docker-compose.yml up
 up-prod: up_prod
 up-stag: up_staging
 up_%:
-	docker-compose -f $*.docker-compose.yml up
+	docker-compose -f $*.docker-compose.yml up -d
 
 down-dev: down_dev
 down-prod: down_prod
 down-stag: down_staging
 down_%:
 	docker-compose -f $*.docker-compose.yml down
+
+# DEPLOY
+.PHONY: deploy-stag
+deploy-stag:
+	./scripts/release.sh
 
 
 # DJANGO
