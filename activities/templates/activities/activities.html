@@ -6,6 +6,11 @@
     <main role="main">
         <div class="album py-5 bg-light">
             <div class="container">
+                {% if not category %}
+                    <a href="{% url 'activities-categories' %}">Categories</a>
+                {% else %}
+                    <h1>{{ category }}</h1>
+                {% endif %}
                 <div class="list-group">
                     {% for activity in object_list %}
                         <a href="{% url 'activities-detail' activity.category activity.id %}"

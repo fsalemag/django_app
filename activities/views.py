@@ -35,6 +35,17 @@ class ActivityMineView(ListView):
 class ActivityView(ListView):
     model = Activity
     template_name = "activities/activities.html"
+
+    def get_queryset(self):
+        if self.kwargs.get("category"):
+            return self.model.objects.filter(category__name=self.kwargs["category"])
+        return super().get_queryset()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["category"] = self.kwargs.get("category")
+        return context
+
     # ordering = ['-date_posted']
 
 
