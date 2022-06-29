@@ -47,9 +47,6 @@ INSTALLED_APPS = [
 
     # apps
     'home',
-    'album',
-    'resume',
-    'projects',
     'users',
     'activities',
 ]

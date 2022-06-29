@@ -1,35 +1,34 @@
 {% extends "home/base.html" %}
 {% block home-active %}active{% endblock %}
 {% block body %}
-  <!-- Page Content -->
-  <div class="container">
+    <!-- Page Content -->
+    <div class="container">
 
-    <!-- Jumbotron Header -->
-    <header class="jumbotron my-4">
-      <div style="display: inline;">
-        <span class="display-3">Hey There!</span>
-        <a style="float: right; margin-top: -3em;" href="#" class="btn btn-primary">All posts</a>
-    </div>
-    <p class="lead">I am Francisco and I am originally from Portugal. I have decided to create this website in order to allow you to know me better, and to have a place where I can store everything that crosses my mind. Hope you enjoy!</p>
-      
-    </header>
-    <div class="row text-center">
-      {% for post in posts %}
+        <!-- Jumbotron Header -->
+        <header class="jumbotron my-4">
+            <div style="display: inline;">
+                <span class="display-3">Hey There!</span>
+            </div>
+            <p class="lead">Join activities</p>
 
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" height=150 src="{{ post.intro_image }}" alt="">
-          <div class="card-body">
-            <h4 class="card-title">{{post.title}}</h4>
-            <p class="card-text">{{post.description}}</p>
-          </div>
-          <div class="card-footer">
-            <a href="{% url 'home-post-detail' post.id %}" class="btn btn-primary">Full Post</a>
-          </div>
+        </header>
+        <div class="row text-center">
+            {% for post in posts %}
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <img class="card-img-top" height=150 src="{{ post.intro_image }}" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ post.title }}</h4>
+                            <p class="card-text">{{ post.description }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'home-post-detail' post.id %}" class="btn btn-primary">Full Post</a>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
         </div>
-      </div>
-
-      {% endfor %}
     </div>
-  </div>
 {% endblock %}
