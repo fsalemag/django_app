@@ -43,7 +43,18 @@
                            class="list-group-item list-group-item-action">
                             <div class="d-flex w-100 justify-content-between align-middle align-items-center">
                                 <h5 class="mb-1">{{ activity.title }}</h5>
-                                <span class="badge badge-primary badge-pill align-middle">{{ activity.participants.count }}/{{ activity.max_n_participants }}</span>
+                                <div>
+                                    {% if activity.waiting_list_enabled and  activity.is_full %}
+                                        <span class="badge badge-secondary badge-pill align-middle">{{ activity.waiting_list.count }}</span>
+                                    {% endif %}
+                                    <span class="badge badge-pill align-middle
+                                        {% if not activity.is_full %}badge-success
+                                        {% elif activity.waiting_list_enabled %}badge-warning
+                                        {% else %}badge-danger
+                                        {% endif %}">
+                                        {{ activity.participants.count }}/{{ activity.max_n_participants }}
+                                    </span>
+                                </div>
                             </div>
                             <p class="mb-1">{{ activity.description }}</p>
                             <p class="my-0 py-0"><small>{{ activity.time_of_event }}</small></p>

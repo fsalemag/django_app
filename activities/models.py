@@ -41,6 +41,9 @@ class Activity(models.Model):
     def get_absolute_url(self):
         return reverse('activities-detail', kwargs={'pk': self.pk, 'category': self.category.name})
 
+    @property
+    def is_full(self):
+        return self.participants.count() >= self.max_n_participants
 
 class FavouriteActivity(models.Model):
     ...
