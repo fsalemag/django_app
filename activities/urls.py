@@ -3,9 +3,9 @@ from .views import ActivityView, CategoryView, ActivityDetailView, ActivityEditD
     ActivityMineView
 
 urlpatterns = [
-    path("", ActivityView.as_view(), name="activities-index"),
+    path("", ActivityView.as_view(), {"mine": False}, name="activities-index"),
+    path("my", ActivityView.as_view(), {"mine": True}, name="activities-mine"),
     path("create", ActivityCreateView.as_view(), name='activities-create'),
-    path("mine", ActivityMineView.as_view(), name='activities-mine'),
 
     path("category/", CategoryView.as_view(), name="activities-categories"),
     path("category/<category>", ActivityView.as_view(), name='activities-category'),

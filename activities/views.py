@@ -46,11 +46,16 @@ class ActivityView(ListView):
         if GET.get("max_participants"):
             qs = qs.filter(max_n_participants__lte=GET.get("max_participants"))
 
+        if self.kwargs.get("mine"):
+            qs = qs.filter(creator=self.request.user)
+
         return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["category"] = self.kwargs.get("category")
+        context["mine"] = self.kwargs.get("mine")
+
         return context
 
     # ordering = ['-date_posted']

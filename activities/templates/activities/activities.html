@@ -9,11 +9,13 @@
 
                 {# FILTERS #}
                 <p>
+                {% if not mine %}
                     {% if not category %}
                         <a class="mx-5" href="{% url 'activities-categories' %}">Categories</a>
                     {% else %}
                         <span class="mr-5">{{ category }}</span>
                     {% endif %}
+                {% endif %}
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseFilter"
                             aria-expanded="false" aria-controls="collapseFilter">
                         Filter

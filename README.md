@@ -12,3 +12,4 @@ Features ideas:
 
 # Issues
 1. Calendar widget has bad display on mobile
+2. After joinning activity, needs to go back twice to go back
