@@ -6,6 +6,8 @@
     <main role="main">
         <div class="album py-5 bg-light">
             <div class="container">
+
+                {# FILTERS #}
                 <p>
                     {% if not category %}
                         <a class="mx-5" href="{% url 'activities-categories' %}">Categories</a>
@@ -23,10 +25,18 @@
                 </p>
                 <div class="collapse" id="collapseFilter">
                     <div class="card card-body">
-                        Some placeholder content for the collapse component. This panel is hidden by default but
-                        revealed when the user activates the relevant trigger.
+                        <form id="searchForm" action="" method="GET">
+                            <div>
+                                <input type="text" name="max_participants" placeholder="Maximum participants">
+                            </div>
+
+                            <input type="submit" value="Search">
+                        </form>
                     </div>
                 </div>
+
+
+                {#  Activities #}
                 <div class="list-group">
                     {% for activity in object_list %}
                         <a href="{% url 'activities-detail' activity.category activity.id %}"
@@ -41,6 +51,8 @@
                         </a>
                     {% endfor %}
                 </div>
+
+
             </div>
         </div>
     </main>

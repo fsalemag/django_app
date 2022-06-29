@@ -36,9 +36,11 @@
 
 </head>
 <body>
-<!-- Navigation -->
+
+{# Navigation #}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
+
         <a class="navbar-brand" href="{% url "home-index" %}">Francisco Salema</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,7 +58,7 @@
                     <a class="nav-link" href="{% url 'activities-index' %}">Activities</a>
                 </li>
 
-                <!-- User profile -->
+                {# USER PROFILE #}
                 <li class="nav-item">
                     {% if user.is_authenticated %}
                         <div class="dropdown {% block profile-active %}{% endblock %}">
@@ -71,12 +73,14 @@
                                 <a class="dropdown-item" href="{% url 'activities-create' %}">Create Activity</a>
 
 
-                                <!-- Logout -->
+                                {# LOGOUT #}
                                 <div class="dropdown-divider"></div>
                                 <form class="pointer" method="post" action="{% url 'account_logout' %}">
                                     {% csrf_token %}
                                     <a class="dropdown-item" onclick="this.parentNode.submit()">Log out</a>
                                 </form>
+
+
                             </div>
                         </div>
                     {% else %}
@@ -89,11 +93,13 @@
         </div>
     </div>
 </nav>
-{% block body %}
 
+
+{% block body %}
 {% endblock %}
 
-<!-- Footer -->
+
+{# FOOTER #}
 <footer class="py-3 bg-dark">
     <div class="container footer">
         <p class="m-0 text-center text-white">Copyright &copy; Francisco Salema 2022</p>
@@ -102,7 +108,8 @@
             <li><a href="#">Contribute</a></li>
         </ul>
     </div>
-    <!-- /.container -->
 </footer>
+
+
 </body>
 </html>

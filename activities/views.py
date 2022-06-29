@@ -8,6 +8,7 @@ from django.db.models import Count
 from .models import Activity, Category
 from .forms import ActivityForm
 
+
 class CategoryView(ListView):
     model = Category
     template_name = "activities/index.html"
@@ -37,9 +38,15 @@ class ActivityView(ListView):
     template_name = "activities/activities.html"
 
     def get_queryset(self):
+        GET = self.request.GET
+        qs = super().get_queryset()
         if self.kwargs.get("category"):
-            return self.model.objects.filter(category__name=self.kwargs["category"])
-        return super().get_queryset()
+            qs = qs.filter(category__name=self.kwargs["category"])
+
+        if GET.get("max_participants"):
+            qs = qs.filter(max_n_participants__lte=GET.get("max_participants"))
+
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
