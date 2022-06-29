@@ -1,6 +1,7 @@
 {% extends "activities/base.html" %}
 {% block profile-active %}active{% endblock %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block custom_sources %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>
@@ -33,7 +34,7 @@
             <div class="container">
                 <div class="row">
                     <form method="post">{% csrf_token %}
-                        {{ form.as_p }}
+                        {{ form|crispy }}
                         <input type="submit" value="Update">
                     </form>
 
