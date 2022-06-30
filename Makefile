@@ -13,7 +13,7 @@ shell-stag: shell_staging
 shell_%:
 	docker run --rm -it \
 		--entrypoint "/bin/bash" \
-		--env-file $(subst staging,prod,$*).env \
+		--env-file .env \
 		--net test \
 		django_app:latest-$*
 
