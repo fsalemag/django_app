@@ -79,7 +79,7 @@ class UserProfile(models.Model):
 
     profile_picture = models.ImageField(
         upload_to='uploads/profile_pictures/',
-        default='default.jpg',
+        default='uploads/profile_pictures/default.jpg',
     )
 
     class Meta:

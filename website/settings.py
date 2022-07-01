@@ -116,8 +116,8 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-STATIC_URL = os.path.join("static", os.getenv("ENV"), 'static/')
-MEDIA_URL = os.path.join("static", os.getenv("ENV"), 'media/')
+STATIC_URL = os.path.join("/static", os.getenv("ENV"), 'static/')
+MEDIA_URL = os.path.join("/static", os.getenv("ENV"), 'media/')
 
 MEDIA_ROOT = '/vol/web/media'
 STATIC_ROOT = '/vol/web/static'
