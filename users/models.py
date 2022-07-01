@@ -1,8 +1,12 @@
-from django.db import models
+import os
+
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-
+from PIL import Image
 
 
 class CustomUserManager(BaseUserManager):
@@ -73,6 +77,11 @@ class UserProfile(models.Model):
 
     phone_number = models.IntegerField()
 
+    profile_picture = models.ImageField(
+        upload_to='uploads/profile_pictures/',
+        default='default.jpg',
+    )
+
     class Meta:
         verbose_name = _("UserProfile")
         verbose_name_plural = _("UserProfiles")
@@ -82,3 +91,47 @@ class UserProfile(models.Model):
 
     def get_absolute_url(self):
         return reverse("UserProfile_detail", kwargs={"pk": self.pk})
+
+    def save(self, *args, **kwargs):
+        super().save()
+        img = Image.open(self.profile_picture.path)
+        width, height = img.size  # Get dimensions
+
+        if width > 300 and height > 300:
+            # keep ratio but shrink down
+            img.thumbnail((width, height))
+
+        # check which one is smaller
+        if height < width:
+            # make square by cutting off equal amounts left and right
+            left = (width - height) / 2
+            right = (width + height) / 2
+            top = 0
+            bottom = height
+            img = img.crop((left, top, right, bottom))
+
+        elif width < height:
+            # make square by cutting off bottom
+            left = 0
+            right = width
+            top = 0
+            bottom = width
+            img = img.crop((left, top, right, bottom))
+
+        if width > 300 and height > 300:
+            img.thumbnail((300, 300))
+
+        img.save(self.profile_picture.path)
+
+
+@receiver(pre_save, sender=UserProfile)
+def remove_old_picture_if_exists(sender, **kwargs):
+    new_user_profile = kwargs['instance']
+    try:
+        old_user_profile = UserProfile.objects.get(pk=new_user_profile.pk)
+    except UserProfile.DoesNotExist:
+        return None
+
+    if old_user_profile.profile_picture:
+        path = old_user_profile.profile_picture.path
+        os.remove(path)

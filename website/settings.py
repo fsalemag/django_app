@@ -9,8 +9,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = bool(int(os.environ.get("DEBUG", 0)))
 
 ALLOWED_HOSTS = list(filter(
-        None,
-        os.environ.get('ALLOWED_HOSTS', '').split(','),
+    None,
+    os.environ.get('ALLOWED_HOSTS', '').split(','),
 ))
 
 AUTH_USER_MODEL = 'users.MyUser'
@@ -80,6 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -115,8 +116,8 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-STATIC_URL = os.path.join("/static", os.getenv("ENV"), 'static/')
-MEDIA_URL = os.path.join("/static", os.getenv("ENV"), 'media/')
+STATIC_URL = os.path.join("static", os.getenv("ENV"), 'static/')
+MEDIA_URL = os.path.join("static", os.getenv("ENV"), 'media/')
 
 MEDIA_ROOT = '/vol/web/media'
 STATIC_ROOT = '/vol/web/static'

@@ -1,5 +1,6 @@
 {% extends "home/base.html" %}
 {% load static %}
+
 {% block title %}Profile{% endblock %}
 {% block profile-active %}active{% endblock %}
 
@@ -12,6 +13,7 @@
 <main role="main">
   <div class="album py-5 bg-light">
     <div class="container">
+        <img src="{{ user_profile.profile_picture.url }}" alt="">
         <p>{{ user_profile.date_of_birth }}</p>
         <p>{{ user_profile.get_gender_display }}</p>
         <p>{{ user_profile.phone_number }}</p>

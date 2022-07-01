@@ -8,7 +8,8 @@ Features ideas:
 4. Add maps API to help fill the event location - https://locationiq.com/
 5. Add filtering activities/categories
 6. Add ordering for activbities/categories
-7. Add statistics to home page
+7. Add statistics of activities to home page 
+8. Add scoring system to users 
 
 # Issues
 1. Calendar widget has bad display on mobile
