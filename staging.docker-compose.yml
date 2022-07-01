@@ -21,7 +21,6 @@ services:
       - ./data/web:/vol/web
     env_file:
       - .env
-
     depends_on:
       - db-staging
     networks:

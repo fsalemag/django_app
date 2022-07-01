@@ -27,5 +27,5 @@ RUN set -eux && \
 
 USER $USER_NAME
 
-COPY ./entrypoint.sh /
+COPY ./scripts/entrypoint.sh /
 ENTRYPOINT ["sh", "/entrypoint.sh"]
