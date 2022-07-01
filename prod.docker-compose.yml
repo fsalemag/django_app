@@ -2,18 +2,20 @@ version: "3.9"
 
 services:
   db:
-    image: postgres
+    image: postgres:14.4
+    container_name: django_db_prod
     volumes:
       - ./data/db:/var/lib/postgresql/data
     env_file:
       - .env
     networks:
-      - test
+      - reverse_proxy
   web:
     build:
       context: .
       dockerfile: ./prod.Dockerfile
     image: django_app:latest-prod
+    container_name: django_web_prod
     volumes:
       - .:/code
       - ./data/web:/vol/web
@@ -23,8 +25,8 @@ services:
     depends_on:
       - db
     networks:
-      - test
+      - reverse_proxy
 
 networks:
-   test:
+   reverse_proxy:
       external: true

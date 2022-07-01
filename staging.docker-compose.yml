@@ -2,18 +2,20 @@ version: "3.9"
 
 services:
   db-staging:
-    image: postgres
+    image: postgres:14.4
+    container_name: django_db_stag
     volumes:
       - ./data/db:/var/lib/postgresql/data
     env_file:
       - .env
     networks:
-      - test
+      - reverse_proxy
   web-staging:
     build:
       context: .
       dockerfile: ./prod.Dockerfile
     image: django_app:latest-staging
+    container_name: django_web_stag
     volumes:
       - .:/code
       - ./data/web:/vol/web
@@ -23,8 +25,8 @@ services:
     depends_on:
       - db-staging
     networks:
-      - test
+      - reverse_proxy
 
 networks:
-   test:
+   reverse_proxy:
       external: true
