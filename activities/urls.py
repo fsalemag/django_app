@@ -1,10 +1,8 @@
 from django.urls import path
-from .views import ActivityView, CategoryView, ActivityDetailView, ActivityEditDetailView, ActivityCreateView, \
-    ActivityMineView
+from .views import ActivityView, CategoryView, ActivityDetailView, ActivityEditDetailView, ActivityCreateView
 
 urlpatterns = [
-    path("", ActivityView.as_view(), {"mine": False}, name="activities-index"),
-    path("my", ActivityView.as_view(), {"mine": True}, name="activities-mine"),
+    path("", ActivityView.as_view(), name="activities-index"),
     path("create", ActivityCreateView.as_view(), name='activities-create'),
 
     path("category/", CategoryView.as_view(), name="activities-categories"),

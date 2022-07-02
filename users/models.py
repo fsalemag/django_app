@@ -66,6 +66,7 @@ class UserProfile(models.Model):
         MyUser,
         on_delete=models.CASCADE,
         primary_key=True,
+        related_name="user_profile"
     )
 
     date_of_birth = models.DateField()
@@ -86,7 +87,8 @@ class UserProfile(models.Model):
 
     @property
     def activities(self):
-        return self.user.activities
+        return self.user.activities.filter(time_of_event__gt=datetime.now())
+
 
     @property
     def activities_completed(self):

@@ -1,7 +1,6 @@
 # Next steps
-1. Separate my activities into: created, joined, to join
-2. Make it possible to vote on activities
-3. Waiting list with date_joined
+1. Make it possible to vote on activities
+2. Waiting list with date_joined
 
 # Features
 Features ideas:

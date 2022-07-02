@@ -54,5 +54,6 @@ class Activity(models.Model):
     def is_full(self):
         return self.participants.count() >= self.max_n_participants
 
+
 class FavouriteActivity(models.Model):
     ...
