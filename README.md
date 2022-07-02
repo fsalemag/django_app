@@ -1,5 +1,7 @@
 # Next steps
-
+1. Separate my activities into: created, joined, to join
+2. Make it possible to vote on activities
+3. Waiting list with date_joined
 
 # Features
 Features ideas:
@@ -36,3 +38,4 @@ Features ideas:
 # TODOs
 1. Add ~20 Categories with pictures, store them in static
 2. Make date picker skip minutes in 5/10 minute chunks
+3. Keep an initial data dump for the correct functionality of the website 
