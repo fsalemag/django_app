@@ -10,7 +10,13 @@ Features ideas:
 6. Add ordering for activbities/categories
 7. Add statistics of activities to home page 
 8. Add scoring system to users 
+9. Add competitions/tournaments
+10. Allow selection of circle in profile picture
 
 # Issues
 1. Calendar widget has bad display on mobile
 2. After joinning activity, needs to go back twice to go back
+
+# TODOs
+1. Add ~20 Categories with pictures, store them in static
+2. Make date picker skip minutes in 5/10 minute chunks

@@ -4,14 +4,10 @@
 {% block title %}Profile{% endblock %}
 {% block profile-active %}active{% endblock %}
 
-{% block custom_sources %}
-	<link rel="stylesheet" href="{% static "album/css/index.css" %}" >
-	<link rel="stylesheet" href="{% static "album/js/index.js" %}" >
-{% endblock %}
 {% block body %}
 
 <main role="main">
-  <div class="album py-5 bg-light">
+  <div class="py-5 bg-light">
     <div class="container">
         <img src="{{ user_profile.profile_picture.url }}" alt="">
         <p>{{ user_profile.date_of_birth }}</p>

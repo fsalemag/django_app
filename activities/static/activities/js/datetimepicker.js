@@ -201,9 +201,9 @@
                     $el = $($el);
                     ///angle-up-hour angle-up-minute angle-down-hour angle-down-minute
                     var arr = $el.attr('id').split('-');
-                    var increment = 1;
+                    var increment = 15;
                     if (arr[1] == 'down') {
-                        increment = -1;
+                        increment = -15;
                     }
                     appendIncrement(arr[2], increment);
                     setTimeout(function () {
