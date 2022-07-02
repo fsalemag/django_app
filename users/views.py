@@ -16,6 +16,5 @@ class ProfileView(View):
             "users/profile.html",
             context={
                 "user_profile": user_profile,
-                "image_path": os.path.join(settings.MEDIA_ROOT, user_profile.profile_picture.path),
             }
         )

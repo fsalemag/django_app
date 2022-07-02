@@ -7,6 +7,7 @@ from django.urls import reverse_lazy, reverse
 from django.db.models import Count
 from .models import Activity, Category
 from .forms import ActivityForm
+from users.models import UserProfile
 
 
 class CategoryView(ListView):
@@ -64,6 +65,15 @@ class ActivityView(ListView):
 class ActivityDetailView(DetailView):
     model = Activity
     template_name = "activities/activity-detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        participants = context["activity"].participants.all()
+        context["profiles"] = UserProfile.objects.filter(user__in=participants)
+
+        return context
+
+
 
     # ordering = ['-date_posted']
 

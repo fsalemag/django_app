@@ -19,7 +19,7 @@
 
                 <p>{{ object.time_of_event }} - {{ object.location }}</p>
                 <p>{{ object.participants.count }}/{{ object.max_n_participants }}
-                    {% if object.participants.count == object.max_n_participants and object.waiting_list_enabled%}
+                    {% if object.participants.count == object.max_n_participants and object.waiting_list_enabled %}
                         ({{ object.waiting_list.count }})
                     {% endif %}
                 </p>
@@ -63,6 +63,15 @@
                     </form>
                 {% endif %}
 
+                {# DISPLAY CURRENT USERS 🙂 #}
+                {% for profile in profiles %}
+                    <div>
+                        <p>{{ profile.user.email }} - {{ profile.date_of_birth }}</p>
+                                <img src="{{ profile.profile_picture.url }}" alt="">
+
+
+                    </div>
+                {% endfor %}
 
             </div>
         </div>
