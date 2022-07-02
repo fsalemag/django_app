@@ -1,10 +1,5 @@
 # Next steps
-1. Complement user profile:
-   1. How many activities participated in
-   2. How many activities created
-   3. Joined in
-   4. Score
-   5. ~~Profile picture~~
+
 
 # Features
 Features ideas:
@@ -19,6 +14,10 @@ Features ideas:
 4. Add filtering activities/categories
 5. Add ordering for activities/categories
 6. Add statistics of activities to home page 
+7. After activity date, activity cannot be updated 
+   1. No join/un-join
+   2. No edit at all
+   3. Becomes "archived"
 
 # Non-essential features
 1. Allow activity creator to reach out to users of activity.
@@ -37,9 +36,3 @@ Features ideas:
 # TODOs
 1. Add ~20 Categories with pictures, store them in static
 2. Make date picker skip minutes in 5/10 minute chunks
-3. Complement user profile:
-   1. How many activities participated in
-   2. How many activities created
-   3. Joined in
-   4. Score
-   5. ~~Profile picture~~

@@ -1,6 +1,8 @@
 from django.db import models
 from users.models import MyUser
 from django.urls import reverse
+from django.core.validators import MaxValueValidator, MinValueValidator
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -20,7 +22,7 @@ class Tags(models.Model):
 
 class Activity(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    creator = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    creator = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="activities_created")
 
     title = models.CharField(max_length=100)
     description = models.TextField()
@@ -29,11 +31,18 @@ class Activity(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
-    participants = models.ManyToManyField(MyUser, related_name="participants")
-    max_n_participants = models.IntegerField()
+    participants = models.ManyToManyField(MyUser, related_name="activities")
+    max_n_participants = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(100)]
+    )
 
     waiting_list_enabled = models.BooleanField(default=False)
     waiting_list = models.ManyToManyField(MyUser, related_name="waiting_list", blank=True)
+
+    score = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        null=True
+    )
 
     def __str__(self):
         return self.title
