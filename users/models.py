@@ -1,10 +1,11 @@
+from django.db.models import F
 import os
 from datetime import datetime
 
 from PIL import Image
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
-from django.db.models import Sum
+from django.db.models import Sum, Count, Avg
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.urls import reverse
@@ -89,7 +90,6 @@ class UserProfile(models.Model):
     def activities(self):
         return self.user.activities.filter(time_of_event__gt=datetime.now())
 
-
     @property
     def activities_completed(self):
         return self.user.activities.filter(time_of_event__lte=datetime.now())
@@ -99,11 +99,10 @@ class UserProfile(models.Model):
         return self.user.activities_created.filter(time_of_event__lte=datetime.now())
 
     @property
-    def score(self):
-        sum_score = self.activities_created.aggregate(Sum("score")) .get("score__sum")
-        n_non_null_scores = self.activities_completed.filter(score__isnull=False).count()
-        return round(sum_score / n_non_null_scores, 1)
-
+    def score_avg(self):
+        voted_activities = self.activities_created.filter(votes__isnull=False)
+        scores = voted_activities.annotate(activity_score=Sum("votes__score") / Count("votes"))
+        return round(scores.aggregate(Avg('activity_score')).get("activity_score__avg"), 1)
 
 
     class Meta:

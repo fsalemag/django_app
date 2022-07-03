@@ -5,7 +5,7 @@ from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView, CreateView
 from django.urls import reverse_lazy, reverse
 from django.db.models import Count
-from .models import Activity, Category
+from .models import Activity, Category, ActivityVote
 from .forms import ActivityForm
 from users.models import UserProfile
 
@@ -67,6 +67,9 @@ class ActivityDetailView(DetailView):
         participants = context["activity"].participants.all()
         context["profiles"] = UserProfile.objects.filter(user__in=participants)
 
+        votes = context["activity"].votes.all()
+        context["votes"] = votes
+        context["voters"] = votes.values_list("voter", flat=True)
         return context
 
 
@@ -130,6 +133,16 @@ class ActivityEditDetailView(UpdateView):
         # Add logged in user to the current activity
         elif request.POST.get("action", "") == "join-waiting-list":
             activity.waiting_list.add(request.user)
+            return redirect(reverse("activities-detail", kwargs=kwargs), permanent=True)
+
+        # Add vote
+        elif request.POST.get("action", "") == "vote":
+            vote = ActivityVote.objects.create(
+                voter=self.request.user,
+                score=request.POST.get("score")
+            )
+            print(request.POST)
+            activity.votes.add(vote)
             return redirect(reverse("activities-detail", kwargs=kwargs), permanent=True)
 
         # Normal form to update activity with self.fields

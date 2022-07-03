@@ -1,6 +1,6 @@
 # Next steps
-1. Make it possible to vote on activities
-2. Waiting list with date_joined
+1. Waiting list with date_joined
+
 
 # Features
 Features ideas:
@@ -19,6 +19,7 @@ Features ideas:
    1. No join/un-join
    2. No edit at all
    3. Becomes "archived"
+8. Add participation rate as a score to participants
 
 # Non-essential features
 1. Allow activity creator to reach out to users of activity.
