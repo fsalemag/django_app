@@ -12,23 +12,18 @@
             <p class="lead">Join activities</p>
 
         </header>
-        <div class="row text-center">
-            {% for post in posts %}
-
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <img class="card-img-top" height=150 src="{{ post.intro_image }}" alt="">
-                        <div class="card-body">
-                            <h4 class="card-title">{{ post.title }}</h4>
-                            <p class="card-text">{{ post.description }}</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="{% url 'home-post-detail' post.id %}" class="btn btn-primary">Full Post</a>
-                        </div>
-                    </div>
-                </div>
-
+        <p>Activities posted: {{ n_activities }}</p>
+        <p>Users registered: {{ n_users }}</p>
+        <p>Top categories:
+            {% for top_category in top_categories %}
+                <p class="ml-5">{{ top_category.name }} - {{ top_category.count }} activities </p>
             {% endfor %}
-        </div>
+        </p>
+        <p>Trending categories (last 7 days):
+            {% for trending_category in trending_categories %}
+                <p class="ml-5">{{ trending_category.name }} - {{ trending_category.count }} activities </p>
+            {% endfor %}
+        </p>
+        <p>Activities posted last 30 days: {{ n_month_activities }}</p>
     </div>
 {% endblock %}

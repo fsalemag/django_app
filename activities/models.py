@@ -31,7 +31,7 @@ class ActivityVote(models.Model):
         return f"{self.voter.email}: {self.score} ({self.pk})"
 
 class Activity(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="category_activity")
     creator = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="activities_created")
 
     title = models.CharField(max_length=100)
