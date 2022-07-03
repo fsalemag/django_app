@@ -67,4 +67,5 @@ class Activity(models.Model):
 
     @property
     def score(self):
-        return round(self.votes.aggregate(score=Sum("score")/Count("score")).get("score"), 1)
+        score = self.votes.aggregate(score=Sum("score") / Count("score")).get("score")
+        return round(score, 1) if score else None

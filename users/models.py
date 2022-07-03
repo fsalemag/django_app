@@ -102,7 +102,8 @@ class UserProfile(models.Model):
     def score_avg(self):
         voted_activities = self.activities_created.filter(votes__isnull=False)
         scores = voted_activities.annotate(activity_score=Sum("votes__score") / Count("votes"))
-        return round(scores.aggregate(Avg('activity_score')).get("activity_score__avg"), 1)
+        score = scores.aggregate(Avg('activity_score')).get("activity_score__avg")
+        return round(score, 1) if score else None
 
 
     class Meta:

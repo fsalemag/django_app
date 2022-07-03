@@ -7,9 +7,12 @@ from .models import UserProfile
 
 
 class ProfileView(View):
-    def get(self, request):
-        user = request.user
-        user_profile = UserProfile.objects.get(user=user)
+    def get(self, request, pk=None):
+        if not pk:
+            user = request.user
+            user_profile = UserProfile.objects.get(user=user)
+        else:
+            user_profile = UserProfile.objects.get(pk=pk)
 
         return render(
             request,

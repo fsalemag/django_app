@@ -69,7 +69,7 @@
                         </form>
                     {% endif %}
 
-                {# If it is a past activity #}
+                    {# If it is a past activity #}
                 {% else %}
                     <p>Activity score: {{ activity.score }}</p>
                     {% if user in object.participants.all and user.pk not in voters %}
@@ -92,10 +92,12 @@
 
                 {# DISPLAY CURRENT USERS 🙂 #}
                 {% for profile in profiles %}
-                    <div>
-                        <p>{{ profile.user.email }} - {{ profile.date_of_birth }}</p>
-                        <img src="{{ profile.profile_picture.url }}" alt="">
-                    </div>
+                    <a href="{% url 'users-external-profile' profile.pk %}">
+                        <div>
+                            <p>{{ profile.user.email }} - {{ profile.date_of_birth }}</p>
+                            <img src="{{ profile.profile_picture.url }}" alt="">
+                        </div>
+                    </a>
                 {% endfor %}
             </div>
         </div>
