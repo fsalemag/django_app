@@ -1,13 +1,14 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
-from django.views.generic.list import ListView
+from django.shortcuts import redirect
+from django.db.models import Count
+from django.shortcuts import redirect
+from django.urls import reverse
 from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView, CreateView
-from django.urls import reverse_lazy, reverse
-from django.db.models import Count
-from .models import Activity, Category, ActivityVote
-from .forms import ActivityForm
+from django.views.generic.list import ListView
+
 from users.models import UserProfile
+from .forms import ActivityForm
+from .models import Activity, Category, ActivityVote
 
 
 class CategoryView(ListView):
@@ -16,7 +17,7 @@ class CategoryView(ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.annotate(n_activities=Count('activity')).order_by(
+        qs = qs.annotate(n_activities=Count('category_activity')).order_by(
             "-n_activities"
         )
 

@@ -1,11 +1,13 @@
-from django.contrib.auth.models import AnonymousUser
-from users.models import MyUser
-from django.test import RequestFactory, TestCase
-from django.urls import reverse
 from datetime import datetime, timedelta
 
+from django.contrib.auth.models import AnonymousUser
+from django.test import RequestFactory, TestCase
+from django.urls import reverse
+
+from activities.models import Category
+from utils.test_utils import create_activities_and_categories
 from ..views import index
-from activities.models import Activity, Category
+
 
 class HomeTest(TestCase):
     index_url = reverse("home-index")
@@ -13,11 +15,6 @@ class HomeTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-
-        user = MyUser.objects.create(
-            email="dummy@dummy.com",
-            password="dummy_password",
-        )
 
         activities = {
             "football": {
@@ -50,22 +47,7 @@ class HomeTest(TestCase):
             }
         }
 
-        for category, values in activities.items():
-            category = Category.objects.create(name=category, description=f"Description {category}")
-
-            for i in range(values["count"]):
-                activity = Activity.objects.create(
-                    category=category,
-                    creator=user,
-                    title="Dummy Activity",
-                    description="Dummy Description",
-                    location="Dummy Location",
-                    time_of_event=values["date"],
-                    max_n_participants=5,
-                )
-
-                activity.created_on = values["date"]
-                activity.save()
+        create_activities_and_categories(activities)
 
 
     @classmethod

@@ -36,3 +36,4 @@ Features ideas:
 1. Add ~20 Categories with pictures, store them in static
 2. Make date picker skip minutes in 5/10 minute chunks
 3. Keep an initial data dump for the correct functionality of the website 
+4. Separate dev and prod dependencies in requirements.txt
