@@ -48,6 +48,8 @@ deploy-stag:
 create:
 	docker-compose run web django-admin startproject website .
 
+test-dev:
+	docker-compose -f dev.docker-compose.yml run web python manage.py test
 
 # DB
 DUMP_FILE ?= dump.json
