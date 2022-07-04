@@ -1,5 +1,6 @@
 # Next steps
 1. Waiting list with date_joined
+2. Integrate testing
 
 
 # Features
@@ -14,11 +15,7 @@ Features ideas:
 3. Add maps API to help fill the event location - https://locationiq.com/
 4. Add filtering activities/categories
 5. Add ordering for activities/categories
-6. Add statistics of activities to home page 
-7. After activity date, activity cannot be updated 
-   1. No join/un-join
-   2. No edit at all
-   3. Becomes "archived"
+6. Add statistics of activities to home page
 8. Add participation rate as a score to participants
 
 # Non-essential features
