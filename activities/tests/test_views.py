@@ -2,9 +2,8 @@ from datetime import datetime, timedelta
 
 from django.contrib.auth.models import AnonymousUser
 from django.test import RequestFactory, TestCase
-from django.urls import reverse
 
-from utils.test_utils import create_activities_and_categories
+from utils.test_utils import create_activities_and_categories, create_user_and_profile
 from ..views import *
 
 
@@ -29,6 +28,7 @@ class ActivityTest(TestCase):
             }
         }
 
+        user, _ = create_user_and_profile("dummy@dummy.com")
         create_activities_and_categories(activities)
 
 

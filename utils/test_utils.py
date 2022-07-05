@@ -1,15 +1,16 @@
+from datetime import datetime, timedelta
+
 from activities.models import Category, Activity
-from users.models import MyUser
+from users.models import MyUser, UserProfile
 
 
-def create_activities_and_categories(config):
-    user = MyUser.objects.create(
-        email="dummy@dummy.com",
-        password="dummy_password",
+def create_activities_and_categories(config, email="dummy@dummy.com"):
+    user = MyUser.objects.get(
+        email=email
     )
 
     for category, values in config.items():
-        category = Category.objects.create(name=category, description=f"Description {category}")
+        category, _ = Category.objects.get_or_create(name=category, description=f"Description {category}")
 
         for i in range(values["count"]):
             activity = Activity.objects.create(
@@ -24,3 +25,21 @@ def create_activities_and_categories(config):
 
             activity.created_on = values["date"]
             activity.save()
+
+
+def create_user_and_profile(email):
+    user, _ = MyUser.objects.get_or_create(
+        email=email,
+        password="dummy_password",
+    )
+    user.set_password("dummy_password")
+    user.save()
+
+    profile, _ = UserProfile.objects.get_or_create(
+        user=user,
+        date_of_birth=datetime.now() - timedelta(days=365*25),
+        gender="f",
+        phone_number=123123123,
+    )
+
+    return user, profile

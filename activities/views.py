@@ -1,4 +1,3 @@
-from django.shortcuts import redirect
 from django.db.models import Count
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -22,17 +21,6 @@ class CategoryView(ListView):
         )
 
         return qs
-
-
-class ActivityMineView(ListView):
-    model = Activity
-    template_name = "activities/activity-mine.html"
-
-    # ordering = ['-date_posted']
-
-    def get_queryset(self, *args, **kwargs):
-        queryset = super().get_queryset()
-        return queryset.filter(creator=self.request.user)
 
 
 class ActivityView(ListView):

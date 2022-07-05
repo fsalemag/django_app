@@ -5,7 +5,7 @@ from django.test import RequestFactory, TestCase
 from django.urls import reverse
 
 from activities.models import Category
-from utils.test_utils import create_activities_and_categories
+from utils.test_utils import create_activities_and_categories, create_user_and_profile
 from ..views import index
 
 
@@ -47,7 +47,8 @@ class HomeTest(TestCase):
             }
         }
 
-        create_activities_and_categories(activities)
+        user, _ = create_user_and_profile(email="dummy@dummy.com")
+        create_activities_and_categories(activities, email=user.email)
 
 
     @classmethod

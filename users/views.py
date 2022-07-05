@@ -1,7 +1,6 @@
-from django.shortcuts import render
-from django.views.generic import View
+from django.shortcuts import render, redirect, reverse
 from django.views.generic import DetailView
-
+from django.views.generic import View
 
 from .models import UserProfile
 
@@ -10,6 +9,9 @@ class ProfileView(View):
     def get(self, request, pk=None):
         if not pk:
             user = request.user
+            if not user.is_authenticated:
+                return redirect(reverse('account_login'))
+
             user_profile = UserProfile.objects.get(user=user)
         else:
             user_profile = UserProfile.objects.get(pk=pk)
@@ -36,16 +38,3 @@ class ProfileActivityView(DetailView):
     def get_object(self, queryset=None):
         qs = self.get_queryset()
         return qs.get()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        user_profile = context.pop("object")
-
-        # Joined activities
-
-        # To join activities
-
-        # My activities
-        print(context)
-        return context
