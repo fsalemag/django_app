@@ -1,8 +1,9 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from django.contrib.auth.models import AnonymousUser
 from django.test import RequestFactory, TestCase
 from django.urls import reverse
+from django.utils import timezone
 
 from activities.models import Category
 from utils.test_utils import create_activities_and_categories, create_user_and_profile
@@ -19,31 +20,31 @@ class HomeTest(TestCase):
         activities = {
             "football": {
                 "count": 3,
-                "date": datetime.now() - timedelta(days=5),
+                "date": timezone.now() - timedelta(days=5),
             },
             "tennis": {
                 "count": 1,
-                "date": datetime.now() - timedelta(days=4),
+                "date": timezone.now() - timedelta(days=4),
             },
             "padel": {
                 "count": 2,
-                "date": datetime.now() - timedelta(days=5),
+                "date": timezone.now() - timedelta(days=5),
             },
             "volleyball": {
                 "count": 4,
-                "date": datetime.now() - timedelta(days=15),
+                "date": timezone.now() - timedelta(days=15),
             },
             "basketball": {
                 "count": 5,
-                "date": datetime.now() - timedelta(days=15),
+                "date": timezone.now() - timedelta(days=15),
             },
             "handball": {
                 "count": 7,
-                "date": datetime.now() - timedelta(days=15)
+                "date": timezone.now() - timedelta(days=15)
             },
             "rugby": {
                 "count": 12,
-                "date": datetime.now() - timedelta(days=32)
+                "date": timezone.now() - timedelta(days=32)
             }
         }
 

@@ -35,8 +35,8 @@ class Activity(models.Model):
     description = models.TextField()
     location = models.CharField(max_length=100)
     time_of_event = models.DateTimeField()
-    created_on = models.DateTimeField(auto_now_add=True)
-    updated_on = models.DateTimeField(auto_now=True)
+    created_on = models.DateTimeField(default=timezone.now)
+    updated_on = models.DateTimeField(default=timezone.now)
 
     participants = models.ManyToManyField(MyUser, related_name="activities")
     max_n_participants = models.PositiveSmallIntegerField(
@@ -66,3 +66,7 @@ class Activity(models.Model):
     def score(self):
         score = self.votes.aggregate(sum_score=Sum("score"), count_score=Count("score"))
         return round(score.get("sum_score") / score.get("count_score"), 1) if score.get("count_score", 0) != 0 else None
+
+    def save(self, **kwargs):
+        self.updated_on = timezone.now()
+        super().save()

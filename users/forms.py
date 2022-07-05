@@ -2,6 +2,7 @@ from datetime import datetime
 
 from allauth.account.forms import SignupForm
 from django import forms
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from .models import UserProfile
@@ -28,7 +29,7 @@ class CustomSignupForm(SignupForm):
         ),
     )
 
-    BIRTH_YEAR_CHOICES = range(datetime.now().year - 4, 1914, -1)
+    BIRTH_YEAR_CHOICES = range(timezone.now().year - 4, 1914, -1)
     date_of_birth = forms.DateField(
         label=_("Date of birth"),
         widget=forms.SelectDateWidget(

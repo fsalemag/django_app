@@ -1,4 +1,7 @@
-from datetime import datetime, timedelta
+
+from datetime import timedelta
+
+from django.utils import timezone
 
 from activities.models import Category, Activity
 from users.models import MyUser, UserProfile
@@ -37,7 +40,7 @@ def create_user_and_profile(email):
 
     profile, _ = UserProfile.objects.get_or_create(
         user=user,
-        date_of_birth=datetime.now() - timedelta(days=365*25),
+        date_of_birth=timezone.now() - timedelta(days=365*25),
         gender="f",
         phone_number=123123123,
     )

@@ -1,6 +1,4 @@
-from django.db.models import F
 import os
-from datetime import datetime
 
 from PIL import Image
 from django.contrib.auth.models import AbstractUser, BaseUserManager
@@ -9,6 +7,7 @@ from django.db.models import Sum, Count, Avg
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 
@@ -88,15 +87,15 @@ class UserProfile(models.Model):
 
     @property
     def activities(self):
-        return self.user.activities.filter(time_of_event__gt=datetime.now())
+        return self.user.activities.filter(time_of_event__gt=timezone.now())
 
     @property
     def activities_completed(self):
-        return self.user.activities.filter(time_of_event__lte=datetime.now())
+        return self.user.activities.filter(time_of_event__lte=timezone.now())
 
     @property
     def activities_created(self):
-        return self.user.activities_created.filter(time_of_event__lte=datetime.now())
+        return self.user.activities_created.filter(time_of_event__lte=timezone.now())
 
     @property
     def score_avg(self):

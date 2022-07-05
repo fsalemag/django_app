@@ -1,7 +1,8 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from django.contrib.auth.models import AnonymousUser
 from django.test import RequestFactory, TestCase
+from django.utils import timezone
 
 from utils.test_utils import create_activities_and_categories, create_user_and_profile
 from ..views import *
@@ -16,15 +17,15 @@ class ActivityViewTest(TestCase):
         activities = {
             "football": {
                 "count": 10,
-                "date": datetime.now() - timedelta(days=5),
+                "date": timezone.now() - timedelta(days=5),
             },
             "tennis": {
                 "count": 7,
-                "date": datetime.now() - timedelta(days=4),
+                "date": timezone.now() - timedelta(days=4),
             },
             "padel": {
                 "count": 3,
-                "date": datetime.now() - timedelta(days=5),
+                "date": timezone.now() - timedelta(days=5),
             }
         }
 
