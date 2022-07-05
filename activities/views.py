@@ -130,7 +130,6 @@ class ActivityEditDetailView(UpdateView):
                 voter=self.request.user,
                 score=request.POST.get("score")
             )
-            print(request.POST)
             activity.votes.add(vote)
             return redirect(reverse("activities-detail", kwargs=kwargs), permanent=True)
 

@@ -20,7 +20,7 @@ def create_activities_and_categories(config, email="dummy@dummy.com"):
                 description="Dummy Description",
                 location="Dummy Location",
                 time_of_event=values["date"],
-                max_n_participants=5,
+                max_n_participants=values.get("max_participants", 5),
             )
 
             activity.created_on = values["date"]

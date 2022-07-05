@@ -1,9 +1,8 @@
-from datetime import datetime
-
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Sum, Count
 from django.urls import reverse
+from django.utils import timezone
 
 from users.models import MyUser
 
@@ -25,9 +24,6 @@ class ActivityVote(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.voter.email}: {self.score} ({self.pk})"
-
-    def __repr__(self):
         return f"{self.voter.email}: {self.score} ({self.pk})"
 
 
@@ -64,9 +60,9 @@ class Activity(models.Model):
 
     @property
     def is_past(self):
-        return self.time_of_event < datetime.now()
+        return self.time_of_event < timezone.now()
 
     @property
     def score(self):
-        score = self.votes.aggregate(score=Sum("score") / Count("score")).get("score")
-        return round(score, 1) if score else None
+        score = self.votes.aggregate(sum_score=Sum("score"), count_score=Count("score"))
+        return round(score.get("sum_score") / score.get("count_score"), 1) if score.get("count_score", 0) != 0 else None

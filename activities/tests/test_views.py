@@ -7,7 +7,7 @@ from utils.test_utils import create_activities_and_categories, create_user_and_p
 from ..views import *
 
 
-class ActivityTest(TestCase):
+class ActivityViewTest(TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -30,7 +30,6 @@ class ActivityTest(TestCase):
 
         user, _ = create_user_and_profile("dummy@dummy.com")
         create_activities_and_categories(activities)
-
 
     @classmethod
     def tearDownClass(cls):

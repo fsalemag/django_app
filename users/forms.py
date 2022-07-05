@@ -1,8 +1,11 @@
+from datetime import datetime
+
 from allauth.account.forms import SignupForm
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from datetime import datetime
+
 from .models import UserProfile
+
 
 class CustomSignupForm(SignupForm):
     """
@@ -55,7 +58,6 @@ class CustomSignupForm(SignupForm):
         # Handle saving of profile to model UserProfile
         if request.method == "POST":
             post = request.POST
-            print(post)
 
             profile = UserProfile()
             profile.user = user
