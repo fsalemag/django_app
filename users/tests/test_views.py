@@ -81,7 +81,6 @@ class UserTest(TestCase):
 
         self.assertEqual(UserProfile.objects.get(user__email="dummy2@dummy.com"), context["user_profile"])
 
-
     def test_activities_mine_page_status_code(self):
         request = self.factory.get("users-activities")
         request.user = self.my_user

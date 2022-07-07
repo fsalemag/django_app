@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+import pytest
 from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import reverse
 from django.test import RequestFactory, TestCase
@@ -11,6 +12,7 @@ from ..models import Activity, Category, ActivityVote
 from ..views import CategoryView, ActivityCreateView, ActivityEditDetailView
 
 
+@pytest.mark.django_db
 class ActivityViewTest(TestCase):
 
     @classmethod
@@ -144,8 +146,8 @@ class ActivityViewTest(TestCase):
         response = ActivityCreateView.as_view()(request)
 
         # returns redirect to my activities
-        self.assertEquals(response.status_code, 302)
-        self.assertEquals(Activity.objects.filter(title='test_title').count(), 1)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Activity.objects.filter(title='test_title').count(), 1)
 
     def test_activity_edit_view_get(self):
         url = reverse('activities-edit-detail', kwargs={"category": "football", "pk": 1})
@@ -154,24 +156,29 @@ class ActivityViewTest(TestCase):
         request = self.factory.get(url)
         request.user = self.my_user
         response = ActivityEditDetailView.as_view()(request, pk=1)
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
         # Not logged in user
         request = self.factory.get(url)
         request.user = self.anonymous_user
         response = ActivityEditDetailView.as_view()(request, pk=1)
-        self.assertEquals(response.status_code, 302)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, reverse("account_login"))
 
         # Other user
         request = self.factory.get(url)
         request.user = self.other_user
         response = ActivityEditDetailView.as_view()(request, pk=1)
-        self.assertEquals(response.status_code, 302)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, reverse("home-index"))
 
     # def test_activity_edit_view_post(self):
     #     url = reverse('activities-edit-detail', kwargs={"category": "football", "pk": 1})
+    #
+    #     request = self.factory.post(url, {"action": "unjoin"})
+    #     request.user = self.my_user
+    #     response = ActivityEditDetailView.as_view()(request, pk=1)
+    #     self.assertEqual(response.status_code, 200)
     #
     #     # join
     #     # unjoin
@@ -195,5 +202,5 @@ class ActivityViewTest(TestCase):
     #     response = ActivityCreateView.as_view()(request)
     #
     #     # returns redirect to my activities
-    #     self.assertEquals(response.status_code, 302)
-    #     self.assertEquals(Activity.objects.filter(title='test_title').count(), 1)
+    #     self.assertEqual(response.status_code, 302)
+    #     self.assertEqual(Activity.objects.filter(title='test_title').count(), 1)

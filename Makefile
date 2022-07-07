@@ -6,7 +6,7 @@ DOCKER_BUILD_ARGS += --build-arg GROUP_NAME=app
 
 .PHONY: up down shell dump load build build-dev build-prod
 shell-dev:
-	docker-compose -f dev.docker-compose.yml run web sh -c /bin/bash
+	UID=$(shell id -u $(USER)) GID=$(shell id -g $(USER)) docker-compose -f dev.docker-compose.yml run web sh -c /bin/bash
 
 shell-prod: shell_prod
 shell-stag: shell_staging
@@ -25,7 +25,7 @@ build_%:
 			build $(DOCKER_BUILD_ARGS)
 
 up-dev:
-	docker-compose -f dev.docker-compose.yml up
+	UID=$(shell id -u $(USER)) GID=$(shell id -g $(USER)) docker-compose -f dev.docker-compose.yml up
 up-prod: up_prod
 up-stag: up_staging
 up_%:
@@ -52,9 +52,10 @@ test-dev:
 	docker-compose -f dev.docker-compose.yml run web python manage.py test
 
 coverage:
-	docker-compose -f dev.docker-compose.yml run web coverage run manage.py test & \
-	coverage html & \
-	$(shell brave-browser htmlcov/index.html)
+	docker-compose -f dev.docker-compose.yml run web coverage run manage.py test
+
+coverage-html: coverage
+	docker-compose -f dev.docker-compose.yml run web coverage html
 
 # DB
 DUMP_FILE ?= dump.json

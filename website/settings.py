@@ -99,9 +99,13 @@ DATABASES = {
     }
 }
 
-if 'test' in sys.argv:
-    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
-    DATABASES['default']['NAME'] = ':memory:'
+if 'test' in sys.argv or '/usr/local/bin/pytest' in sys.argv or os.environ.get("pytest") == '1':
+    DATABASES = {
+        "default": {
+            "ENGINE": 'django.db.backends.sqlite3',
+            "NAME": ':memory:'
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -113,7 +117,6 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
-USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = os.path.join("/static", os.getenv("ENV"), 'static/')
