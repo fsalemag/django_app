@@ -21,7 +21,7 @@ class ActivityVote(models.Model):
         validators=[MinValueValidator(1), MaxValueValidator(5)],
         null=True
     )
-    created_on = models.DateTimeField(auto_now_add=True)
+    created_on = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"{self.voter.email}: {self.score} ({self.pk})"

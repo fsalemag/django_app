@@ -51,6 +51,11 @@ create:
 test-dev:
 	docker-compose -f dev.docker-compose.yml run web python manage.py test
 
+coverage:
+	docker-compose -f dev.docker-compose.yml run web coverage run manage.py test & \
+	coverage html & \
+	$(shell brave-browser htmlcov/index.html)
+
 # DB
 DUMP_FILE ?= dump.json
 dump-dev: dump_dev

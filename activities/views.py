@@ -57,11 +57,8 @@ class ActivityDetailView(DetailView):
         context["profiles"] = UserProfile.objects.filter(user__in=participants)
 
         votes = context["activity"].votes.all()
-        context["votes"] = votes
         context["voters"] = votes.values_list("voter", flat=True)
         return context
-
-
 
     # ordering = ['-date_posted']
 
@@ -79,7 +76,7 @@ class ActivityCreateView(CreateView):
         obj.creator = self.request.user
         obj.save()
 
-        return redirect(reverse('activities-mine'))
+        return redirect(reverse('users-activities'))
 
     # ordering = ['-date_posted']
 
