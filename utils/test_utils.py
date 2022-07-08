@@ -1,13 +1,25 @@
-
 from datetime import timedelta
+from typing import Tuple
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 
 from activities.models import Category, Activity
 from users.models import MyUser, UserProfile
 
 
-def create_activities_and_categories(config, email="dummy@dummy.com"):
+def create_activities_and_categories(config: dict, email: str = "dummy@dummy.com") -> None:
+    """ Creates activities based on config supplied.
+    config must be in the form
+        {
+            "<category>": {
+                "count": <number of activities>,
+                "date": <time_of_event / date_created>,
+            },
+            ...
+        }
+    Configuration can be extended to the other fields, but I haven't had the need so far.
+    """
     user = MyUser.objects.get(
         email=email
     )
@@ -30,13 +42,18 @@ def create_activities_and_categories(config, email="dummy@dummy.com"):
             activity.save()
 
 
-def create_user_and_profile(email):
-    user, _ = MyUser.objects.get_or_create(
-        email=email,
-        password="dummy_password",
-    )
-    user.set_password("dummy_password")
-    user.save()
+def create_user_and_profile(email: str) -> Tuple[MyUser, UserProfile]:
+    """ Create or get both user and correspondent profile
+
+    Cannot use get or create user because I overwrite the password to be `dummy_password` on its encrypted form.
+    There might be a more elegant way of doing this
+    """
+    try:
+        user = MyUser.objects.get(email=email)
+    except ObjectDoesNotExist:
+        user = MyUser.objects.create(email=email, password="qwerty123")
+        user.set_password("dummy_password")
+        user.save()
 
     profile, _ = UserProfile.objects.get_or_create(
         user=user,

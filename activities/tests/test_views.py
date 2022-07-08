@@ -1,136 +1,75 @@
 from datetime import timedelta
 
-import pytest
-from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import reverse
-from django.test import RequestFactory, TestCase
 from django.utils import timezone
 
 from users.models import MyUser, UserProfile
-from utils.test_utils import create_activities_and_categories, create_user_and_profile
 from ..models import Activity, Category, ActivityVote
 from ..views import CategoryView, ActivityCreateView, ActivityEditDetailView
 
 
-@pytest.mark.django_db
-class ActivityViewTest(TestCase):
+class TestActivityView:
+    categories_url = "activities-categories"
+    activities_url = "activities-index"
+    activities_in_category_url = "activities-category"
+    activity_detail_url = "activities-detail"
+    activity_create = "activities-create"
+    activity_edit = "activities-edit-detail"
 
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-
-        activities = {
-            "football": {
-                "count": 10,
-                "date": timezone.now() - timedelta(days=5),
-                "max_participants": 1,
-            },
-            "tennis": {
-                "count": 7,
-                "date": timezone.now() - timedelta(days=4),
-                "max_participants": 2,
-            },
-            "padel": {
-                "count": 3,
-                "date": timezone.now() - timedelta(days=5),
-                "max_participants": 3,
-            }
-        }
-
-        user, _ = create_user_and_profile("dummy@dummy.com")
-        create_activities_and_categories(activities)
-
-    @classmethod
-    def tearDownClass(cls):
-        super().tearDownClass()
-
-    def setUp(self) -> None:
-        self.my_user = MyUser.objects.get(email="dummy@dummy.com")
-        self.other_user, _ = create_user_and_profile(email="dummy2@dummy.com")
-        self.anonymous_user = AnonymousUser()
-        self.factory = RequestFactory()
-
-    def tearDown(self) -> None:
-        pass
-
-    def test_categories_page_status_code(self):
-        request = self.factory.get("activities-categories")
-        request.user = self.my_user
+    def test_categories_page_status_code(self, rf, my_user):
+        request = rf.get(self.categories_url)
+        request.user = my_user
 
         response = CategoryView.as_view()(request)
-        self.assertEqual(response.status_code, 200)
+        assert response.status_code == 200
 
-    def test_categories_page(self):
-        url = reverse("activities-categories")
+    def test_categories_page(self, client):
+        context = client.get(reverse(self.categories_url)).context
 
-        response = self.client.get(url)
-        context = response.context
-
-        self.assertEqual(
-            list(context["category_list"]),
+        assert list(context["category_list"]) == \
             list((
                 Category.objects.get(name="football"),
                 Category.objects.get(name="tennis"),
                 Category.objects.get(name="padel"),
             ))
-        )
 
-    def test_activity_list(self):
-        url = reverse("activities-index")
+    def test_activity_list(self, client):
+        context = client.get(reverse(self.activities_url)).context
 
-        response = self.client.get(url)
-        context = response.context
+        assert list(context.get("object_list")) == list(Activity.objects.all())
 
-        self.assertEqual(
-            list(context.get("object_list")),
-            list(Activity.objects.all())
-        )
+        url = reverse(self.activities_in_category_url, kwargs={"category": "football"})
+        context = client.get(url).context
 
-        url = reverse("activities-category", kwargs={"category": "football"})
-        response = self.client.get(url)
-        context = response.context
-        self.assertEqual(
-            list(context.get("object_list")),
-            list(Activity.objects.filter(category__name="football"))
-        )
+        assert list(context.get("object_list")) == list(Activity.objects.filter(category__name="football"))
 
-    def test_activity_filters(self):
-        url = reverse("activities-index") + "?max_participants=1"
+    # TODO parametrize every query parameter
+    def test_activity_filters(self, client):
+        url = reverse(self.activities_url) + "?max_participants=1"
 
-        response = self.client.get(url)
-        context = response.context
+        context = client.get(url).context
 
-        self.assertEqual(
-            list(context.get("object_list")),
-            list(Activity.objects.all()[:10])
-        )
+        assert list(context.get("object_list")) == \
+               list(Activity.objects.filter(max_n_participants__lte=1))
 
-    def test_activity_detail_view(self):
-        url = reverse('activities-detail', kwargs={'category': "football", 'pk': 1})
+    def test_activity_detail_view(self, my_user, client):
+        url = reverse(self.activity_detail_url, kwargs={'category': "football", 'pk': 1})
 
         activity = Activity.objects.get(pk=1)
-        vote = ActivityVote.objects.create(voter=self.my_user, score=3)
+        vote = ActivityVote.objects.create(voter=my_user, score=3)
         activity.votes.add(vote)
-        activity.participants.add(self.my_user)
+        activity.participants.add(my_user)
 
-        response = self.client.get(url)
-        context = response.context
+        context = client.get(url).context
 
-        self.assertEqual(len(context.get("voters")), 1)
-        self.assertEqual(len(context.get("profiles")), 1)
+        assert len(context.get("voters")) == 1
+        assert len(context.get("profiles")) == 1
 
-        self.assertEqual(
-            MyUser.objects.get(pk=context.get("voters")[0]).email,
-            "dummy@dummy.com"
-        )
+        assert MyUser.objects.get(pk=context.get("voters")[0]).email == "dummy@dummy.com"
 
-        self.assertEqual(
-            list(context.get("profiles")),
-            list(UserProfile.objects.filter(user__email="dummy@dummy.com"))
-        )
+        assert list(context.get("profiles")) == list(UserProfile.objects.filter(user__email="dummy@dummy.com"))
 
-    def test_activity_create_view(self):
-        url = reverse('activities-create')
+    def test_activity_create_view(self, my_user, rf):
         data = {
             'title': 'test_title',
             'description': 'test_description',
@@ -140,45 +79,31 @@ class ActivityViewTest(TestCase):
             'category': Category.objects.all()[0].pk
         }
 
-        request = self.factory.post(url, data)
-        request.user = self.my_user
+        request = rf.post(reverse(self.activity_create), data)
+        request.user = my_user
 
         response = ActivityCreateView.as_view()(request)
 
         # returns redirect to my activities
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(Activity.objects.filter(title='test_title').count(), 1)
+        assert response.status_code == 302
+        assert Activity.objects.filter(title='test_title').count() == 1
 
-    def test_activity_edit_view_get(self):
-        url = reverse('activities-edit-detail', kwargs={"category": "football", "pk": 1})
+    def test_activity_edit_view_get(self, my_user, rf):
+        url = reverse(self.activity_edit, kwargs={"category": "football", "pk": 1})
 
-        # Creator of activity
-        request = self.factory.get(url)
-        request.user = self.my_user
+        request = rf.get(url)
+        request.user = my_user
         response = ActivityEditDetailView.as_view()(request, pk=1)
-        self.assertEqual(response.status_code, 200)
 
-        # Not logged in user
-        request = self.factory.get(url)
-        request.user = self.anonymous_user
-        response = ActivityEditDetailView.as_view()(request, pk=1)
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, reverse("account_login"))
+        assert response.status_code == 200
 
-        # Other user
-        request = self.factory.get(url)
-        request.user = self.other_user
-        response = ActivityEditDetailView.as_view()(request, pk=1)
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, reverse("home-index"))
-
-    # def test_activity_edit_view_post(self):
+    # def test_activity_edit_view_post(self, rf):
     #     url = reverse('activities-edit-detail', kwargs={"category": "football", "pk": 1})
     #
-    #     request = self.factory.post(url, {"action": "unjoin"})
+    #     request = rf.post(url, {"action": "unjoin"})
     #     request.user = self.my_user
     #     response = ActivityEditDetailView.as_view()(request, pk=1)
-    #     self.assertEqual(response.status_code, 200)
+    #     assert response.status_code == 200
     #
     #     # join
     #     # unjoin
@@ -196,11 +121,11 @@ class ActivityViewTest(TestCase):
     #         'category': Category.objects.all()[0].pk
     #     }
     #
-    #     request = self.factory.post(url, data)
+    #     request = rf.post(url, data)
     #     request.user = self.my_user
     #
     #     response = ActivityCreateView.as_view()(request)
     #
     #     # returns redirect to my activities
-    #     self.assertEqual(response.status_code, 302)
-    #     self.assertEqual(Activity.objects.filter(title='test_title').count(), 1)
+    #     assert response.status_code == 302
+    #     assert Activity.objects.filter(title='test_title').count() == 1
